@@ -1,560 +1,345 @@
-<!--
-  index.html
-  - Full single-file professional portfolio template (design-focused)
-  - How to use:
-      1. Create repo: <your-username>.github.io
-      2. Put this index.html in root.
-      3. Add images/files in /assets/ (create folder)
-         - Profile image: assets/profile.jpg
-         - Project images: assets/prj1.jpg, assets/prj2.jpg, ...
-         - Resume PDF: assets/resume.pdf
-      4. Commit & push → Settings → Pages → main / root (if needed)
-  - Replace placeholders (email, phone, project descriptions) with your real info.
-  - Everything is client-side static; works on GitHub Pages, Netlify, Vercel, etc.
--->
-
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Nafees Hossain — Software Engineer | C++ | DSA</title>
-  <meta name="description" content="Portfolio of Nafees Hossain — Software Engineer focused on C++, Data Structures & Algorithms, and systems programming." />
-  <meta name="author" content="Khandakar Nafees Hossain" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Khandakar Nafees Hossain — Software Engineer (C++ / DSA)</title>
+<meta name="description" content="Portfolio of Khandakar Nafees Hossain — Software Engineering, C++, Data Structures & Algorithms.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maxw:1180px;
+    --bg-1:#ffecd2;
+    --bg-2:#fcb69f;
+    --accent1:#00e1ff;
+    --accent2:#ff6bcb;
+    --muted:#6b7280;
+    --card-radius:14px;
+    --shadow-strong: rgba(3,6,23,0.72);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    -webkit-font-smoothing:antialiased;
+    background: linear-gradient(135deg, #ffd6a5 0%, #fdffb6 30%, #cde7ff 70%);
+    min-height:100vh;
+    color:#071022;
+    display:flex;
+    justify-content:center;
+    padding:36px 20px;
+  }
 
-  <style>
-  /* =======================================================
-     VARIABLES & RESET
-     ======================================================= */
-    :root{
-      --bg-dark: #0b0f1a;
-      --glass: rgba(255,255,255,0.04);
-      --muted: #96a0b3;
-      --card-radius: 14px;
-      --accent1: #ff6bcb;  /* pink */
-      --accent2: #00e1ff;  /* cyan */
-      --accent3: #ffd166;  /* yellow */
-      --text: #0c1220;
-      --surface: rgba(255,255,255,0.98);
-      --max-width: 1180px;
-      --shadow-strong: rgba(2,6,23,0.72);
-    }
+  /* painting texture via SVG overlay */
+  .art {
+    position:fixed; inset:0; z-index:0; pointer-events:none; mix-blend-mode:screen; opacity:0.95;
+  }
+  .paint-grad {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(700px 400px at 10% 20%, rgba(255,255,255,0.18), transparent 12%),
+      radial-gradient(700px 400px at 90% 80%, rgba(0,0,0,0.04), transparent 20%);
+    mix-blend-mode: overlay;
+    animation: slow 18s ease-in-out infinite;
+    opacity:0.95;
+  }
+  @keyframes slow{0%{transform:translateY(-3px)}50%{transform:translateY(6px)}100%{transform:translateY(-3px)}}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      background: linear-gradient(135deg, #f6d365 0%, #fda085 30%, #fbc2eb 55%, #a6c1ee 100%);
-      color:var(--text);
-      line-height:1.45;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
+  /* page container */
+  .page{ position:relative; z-index:2; width:100%; max-width:var(--maxw); }
 
-  /* =======================================================
-     PAINTING TEXTURE (SVG overlay & soft animated gradients)
-     ======================================================= */
-    /* full-screen decorative SVG brush layers - pointer-events none */
-    .art-layer {
-      position:fixed;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
-      mix-blend-mode:screen;
-      opacity:0.95;
-    }
-    /* subtle animated radial gradient overlay */
-    .paint-grad {
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-      background:
-        radial-gradient(600px 400px at 10% 20%, rgba(255,255,255,0.14), transparent 10%),
-        radial-gradient(600px 400px at 90% 80%, rgba(0,0,0,0.06), transparent 20%);
-      animation: slowPan 18s ease-in-out infinite;
-      mix-blend-mode: overlay;
-      opacity:0.9;
-    }
-    @keyframes slowPan {
-      0%{transform:translateY(-4px) scale(1); opacity:0.92}
-      50%{transform:translateY(6px) scale(1.02); opacity:0.98}
-      100%{transform:translateY(-4px) scale(1); opacity:0.92}
-    }
+  /* header */
+  header.site-header{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+    padding:14px 18px; border-radius:14px; box-shadow:0 20px 60px rgba(6,10,30,0.12);
+    border:1px solid rgba(0,0,0,0.04); margin-bottom:20px;
+  }
+  .brand{ display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; }
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2)); display:grid;place-items:center;font-weight:800;color:#061226;}
+  .brand h1{ margin:0; font-size:18px;}
+  .brand p{ margin:0; font-size:12px; color:var(--muted); }
 
-  /* =======================================================
-     LAYOUT CONTAINER
-     ======================================================= */
-    .page {
-      position:relative;
-      z-index:2; /* above art layers */
-      width:100%;
-      max-width:var(--max-width);
-      margin: 40px auto;
-      padding: 28px;
-    }
+  .header-actions{ display:flex; gap:10px; align-items:center; }
+  .btn{ padding:8px 12px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; display:inline-flex; gap:8px; align-items:center; }
+  .btn-primary{ background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#071022; box-shadow:0 8px 28px rgba(0,0,0,0.08); border:0; }
+  .btn-ghost{ background:transparent; border:1px solid rgba(0,0,0,0.06); color:var(--accent1); }
 
-    header.site-header{
-      display:flex;
-      gap:20px;
-      align-items:center;
-      justify-content:space-between;
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
-      border-radius: 16px;
-      padding:16px 22px;
-      box-shadow: 0 20px 50px rgba(6,10,30,0.3);
-      border: 1px solid rgba(10,10,10,0.04);
-      margin-bottom:28px;
-      align-items:center;
-    }
+  /* hero area */
+  .hero{ display:grid; grid-template-columns:1fr 340px; gap:22px; align-items:start; margin-bottom:18px; }
+  @media (max-width:980px){ .hero{ grid-template-columns:1fr; } }
 
-    .brand {
-      display:flex;
-      gap:14px;
-      align-items:center;
-      text-decoration:none;
-      color:inherit;
-    }
-    .brand-logo{
-      width:64px; height:64px; border-radius:12px;
-      background: linear-gradient(135deg, var(--accent2), var(--accent1));
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      display:grid; place-items:center; font-weight:800; color:#071022; font-size:18px;
-    }
-    .brand h1{ font-size:20px; margin:0; letter-spacing:-0.2px; }
-    .brand p{ margin:0; font-size:12px; color:var(--muted); margin-top:4px; }
+  /* ---------- CARD BASE ---------- */
+  .card {
+    background:white; border-radius:var(--card-radius); padding:18px; border:1px solid rgba(0,0,0,0.04);
+    position:relative; overflow:visible;
+  }
+  .card h3{ margin:0 0 8px 0; font-size:16px; }
+  .muted{ color:var(--muted); font-size:13px; }
 
-    .header-actions{ display:flex; gap:10px; align-items:center; }
+  /* 1) MEDIUM card — left-side shadow + slight bottom shadow */
+  .card-medium{
+    box-shadow:
+      -18px 0 28px -18px rgba(0,225,255,0.10), /* left glow */
+      0 8px 20px -10px rgba(3,6,18,0.65);      /* bottom */
+    border-radius:14px;
+  }
+  .card-medium::before{
+    content:""; position:absolute; left:0; top:12%; bottom:12%; width:8px; border-top-right-radius:8px; border-bottom-right-radius:8px;
+    background: linear-gradient(180deg,var(--accent1),var(--accent2)); box-shadow:0 8px 30px rgba(0,225,255,0.06);
+  }
 
-    .btn {
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer;
-      border:0; text-decoration:none;
-    }
-    .btn-ghost{ background:transparent; color:var(--accent2); border:1px solid rgba(0,0,0,0.06); }
-    .btn-primary{ background: linear-gradient(90deg,var(--accent2),var(--accent1)); color:#071022; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  /* 2) SMALL card — only bottom shadow */
+  .card-small{
+    box-shadow: 0 12px 28px -14px rgba(2,6,23,0.60); border-radius:12px; padding:12px 14px; max-width:460px;
+  }
 
-  /* =======================================================
-     HERO / INTRO
-     ======================================================= */
-    .hero {
-      display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:28px;
-      align-items:center;
-      margin-bottom:28px;
-    }
-    @media (max-width:980px){
-      .hero{ grid-template-columns: 1fr; }
-    }
+  /* 3) LARGE card — left-side shadow + striped bottom 3D ledge */
+  .card-large{
+    border-radius:16px; padding:22px; margin-bottom:56px;
+    box-shadow:
+      -32px 0 60px -36px rgba(6,18,40,0.6), /* left deep */
+      0 30px 60px -30px rgba(2,6,23,0.72);  /* bottom heavy */
+  }
+  .card-large::after{
+    content:""; position:absolute; left:12px; right:12px; bottom:-22px; height:28px; border-bottom-left-radius:14px; border-bottom-right-radius:14px;
+    background:
+      repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0px, rgba(255,255,255,0.02) 6px, rgba(0,0,0,0.06) 12px),
+      linear-gradient(90deg, rgba(255,107,203,0.12), rgba(0,225,255,0.08));
+    box-shadow: 0 24px 40px -24px var(--shadow-strong);
+    z-index:-1; transform:translateZ(0);
+  }
 
-    .intro {
-      padding:28px;
-      border-radius:16px;
-      background: rgba(255,255,255,0.95);
-      border:1px solid rgba(10,10,10,0.03);
-      box-shadow: 0 30px 70px rgba(8,12,20,0.12);
-    }
+  /* project item layout inside cards */
+  .project { display:flex; gap:14px; align-items:flex-start; }
+  .thumb { width:140px; height:90px; border-radius:10px; overflow:hidden; flex-shrink:0; border:1px solid rgba(0,0,0,0.04); box-shadow:0 12px 30px rgba(6,10,30,0.06); }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .meta h4{ margin:0 0 6px 0; font-size:15px; }
+  .meta p{ margin:0; color:var(--muted); font-size:13px; }
 
-    .intro h2{
-      margin:0 0 8px 0;
-      font-size:28px;
-      letter-spacing:-0.3px;
-    }
-    .intro p.lead{
-      margin:0 0 12px 0;
-      color:var(--muted);
-      font-size:15px;
-    }
+  /* simple grids */
+  .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+  .grid-2{ display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
+  @media (max-width:1100px){ .grid-3{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width:680px){ .grid-3, .grid-2{ grid-template-columns:1fr; } .hero{grid-template-columns:1fr} }
 
-    /* profile card on right inside hero (small card style with avatar) */
-    .profile-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
-      padding:18px;
-      border-radius:14px;
-      border:1px solid rgba(10,10,10,0.03);
-      display:flex;
-      gap:12px;
-      align-items:center;
-      box-shadow: 0 12px 40px rgba(6,10,30,0.08);
-    }
-    .avatar {
-      width:92px; height:92px; border-radius:12px; overflow:hidden; flex-shrink:0;
-      box-shadow: 0 12px 32px rgba(6,10,30,0.12);
-    }
-    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .profile-meta h3{ margin:0; font-size:16px; }
-    .profile-meta p{ margin:6px 0 0 0; color:var(--muted); font-size:13px; }
+  /* badges */
+  .badge{ display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92)); box-shadow:0 8px 20px rgba(6,10,30,0.06); border:1px solid rgba(0,0,0,0.04);}
 
-  /* =======================================================
-     CARD STYLES: medium / small / large
-     ======================================================= */
-
-    /* shared base for cards */
-    .card {
-      position:relative;
-      background: white;
-      border-radius: var(--card-radius);
-      padding:18px;
-      border:1px solid rgba(10,10,10,0.04);
-      overflow:visible; /* allow decorative pseudo elements */
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-    .card h3 { margin:0 0 8px 0; font-size:16px; }
-    .card p { margin:0; color:var(--muted); font-size:14px; }
-    .card small { color:var(--muted); display:block; margin-top:10px; font-size:13px; }
-
-    /* 1) Medium card: left-side shadow + slight bottom shadow */
-    .card-medium {
-      box-shadow:
-         /* left-side colored glow for depth */ -18px 0 28px -18px rgba(0,225,255,0.10),
-         /* subtle bottom shadow */ 0 10px 22px -12px rgba(3,6,18,0.65);
-      border-radius:14px;
-    }
-    /* optional left accent strip (thin) */
-    .card-medium::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:12%;
-      bottom:12%;
-      width:8px;
-      border-top-right-radius:8px;
-      border-bottom-right-radius:8px;
-      background: linear-gradient(180deg, var(--accent2), var(--accent1));
-      box-shadow: 0 8px 30px rgba(0,225,255,0.06);
-    }
-
-    /* 2) Small card: only bottom shadow */
-    .card-small{
-      box-shadow: 0 10px 26px -14px rgba(2,6,23,0.55);
-      border-radius:12px;
-      padding:12px 14px;
-      max-width:420px;
-    }
-
-    /* 3) Large card: left-side shadow + striped bottom 3D ledge */
-    .card-large{
-      border-radius:16px;
-      padding:22px;
-      box-shadow:
-        -32px 0 60px -36px rgba(6,18,40,0.6), /* left-side deep shadow */
-        0 30px 60px -30px rgba(2,6,23,0.72);
-      margin-bottom:56px; /* give space for the ledge so it doesn't overlap content */
-    }
-
-    /* striped bottom ledge (3D effect). The ::after is positioned under the card visually */
-    .card-large::after{
-      content:"";
-      position:absolute;
-      left:12px;
-      right:12px;
-      bottom:-22px;              /* drop below card */
-      height:26px;               /* thickness of ledge */
-      border-bottom-left-radius:14px;
-      border-bottom-right-radius:14px;
-      background:
-        /* stripe pattern */ repeating-linear-gradient(
-          45deg,
-          rgba(0,0,0,0.06) 0px,
-          rgba(255,255,255,0.02) 6px,
-          rgba(0,0,0,0.06) 12px
-        ),
-        /* colored base for a richer look */
-        linear-gradient(90deg, rgba(255,107,203,0.12), rgba(0,225,255,0.08));
-      box-shadow: 0 24px 40px -24px var(--shadow-strong);
-      z-index:-1; /* visually below the card body */
-      transform: translateZ(0);
-    }
-
-  /* card media & project thumbnail helpers */
-    .project {
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .project .thumb {
-      width:120px; height:80px; border-radius:10px; overflow:hidden; flex-shrink:0;
-      box-shadow: 0 12px 30px rgba(6,10,30,0.06);
-      border:1px solid rgba(10,10,10,0.03);
-    }
-    .project .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .project .meta h4{ margin:0 0 6px 0; font-size:15px; }
-    .project .meta p{ margin:0; color:var(--muted); font-size:13px; }
-
-  /* grid layout for sections */
-    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
-    .grid-2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
-    @media (max-width:1100px){ .grid-3{ grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width:680px){ .grid-3, .grid-2 { grid-template-columns: 1fr; } .hero{grid-template-columns:1fr} }
-
-  /* skill badges */
-    .badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
-    .badge {
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
-      padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; color:#0c1220;
-      box-shadow: 0 8px 22px rgba(6,10,30,0.06);
-      border: 1px solid rgba(10,10,10,0.03);
-    }
-
-  /* footer */
-    footer.site-footer{
-      margin-top:28px;
-      padding:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-  /* small interactions */
-    a.link-inline{ color:var(--accent2); text-decoration:none; font-weight:700; }
-    .muted{ color:var(--muted); font-size:13px; }
-  </style>
+  footer{ margin-top:18px; text-align:center; color:var(--muted); font-size:13px; }
+  a.inline{ color:var(--accent1); text-decoration:none; font-weight:700; }
+  small.note{ display:block; margin-top:8px; color:var(--muted); font-size:13px; }
+</style>
 </head>
+
 <body>
-
-  <!-- Decorative art layers (SVG brush strokes) -->
-  <div class="art-layer" aria-hidden="true">
-    <!-- Inline SVG: brush-style blobs - purely decorative -->
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="none" style="width:100%; height:100vh; display:block;">
+  <!-- decorative art (SVG) -->
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="none" style="width:100%;height:100vh;display:block;">
       <defs>
-        <linearGradient id="g1" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff9a9e" stop-opacity="0.85"/>
-          <stop offset="1" stop-color="#fecfef" stop-opacity="0.72"/>
-        </linearGradient>
-        <linearGradient id="g2" x1="0" x2="1">
-          <stop offset="0" stop-color="#a1c4fd" stop-opacity="0.72"/>
-          <stop offset="1" stop-color="#c2e9fb" stop-opacity="0.62"/>
-        </linearGradient>
+        <linearGradient id="gA" x1="0" x2="1"><stop offset="0" stop-color="#ffd6a5"/><stop offset="1" stop-color="#cde7ff"/></linearGradient>
+        <linearGradient id="gB" x1="0" x2="1"><stop offset="0" stop-color="#ff9aa2" stop-opacity="0.86"/><stop offset="1" stop-color="#c2e9fb" stop-opacity="0.72"/></linearGradient>
       </defs>
-
       <g transform="translate(0,-80)">
-        <path d="M0 300 C120 200 260 160 420 190 C680 240 780 120 1000 180 C1150 220 1200 120 1200 120 L1200 600 L0 600 Z"
-              fill="url(#g1)" opacity="0.95"></path>
-
-        <path d="M0 120 C180 60 360 60 540 120 C720 180 900 80 1200 120 L1200 600 L0 600 Z"
-              fill="url(#g2)" opacity="0.62"></path>
+        <path d="M0 300 C140 180 300 140 480 180 C720 240 840 120 1080 180 C1150 210 1200 120 1200 120 L1200 600 L0 600 Z" fill="url(#gA)" opacity="0.95"></path>
+        <path d="M0 120 C180 50 360 40 540 110 C720 180 900 80 1200 120 L1200 600 L0 600 Z" fill="url(#gB)" opacity="0.62"></path>
       </g>
     </svg>
   </div>
 
   <div class="paint-grad" aria-hidden="true"></div>
 
-  <!-- Main page container -->
-  <div class="page" role="main" aria-labelledby="main-title">
+  <!-- main page -->
+  <main class="page" role="main" aria-labelledby="name-heading">
 
-    <!-- Header -->
+    <!-- header -->
     <header class="site-header" role="banner">
       <a class="brand" href="#">
-        <div class="brand-logo">NH</div>
+        <div class="logo">NH</div>
         <div>
           <h1>Khandakar Nafees Hossain</h1>
-          <p>Software Engineer • C++ • Data Structures & Algorithms</p>
+          <p>Software Engineer • C / C++ • Data Structures & Algorithms</p>
         </div>
       </a>
 
-      <div class="header-actions" role="navigation" aria-label="Primary actions">
+      <div class="header-actions">
         <a class="btn btn-ghost" href="#projects">Projects</a>
+        <!-- put your actual resume file at assets/resume.pdf in the repo -->
         <a class="btn btn-primary" href="assets/resume.pdf" download>Download Resume</a>
       </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero" aria-label="Introduction">
-      <div class="intro card">
-        <h2 id="main-title">Hey — I solve problems with code.</h2>
-        <p class="lead">I'm a software engineer focused on system design, competitive programming (C++), and building reliable algorithms and data structures. I design clean, high-performance solutions for real problems.</p>
+    <!-- HERO: About (MEDIUM card) -->
+    <section class="hero" aria-label="Intro">
+      <article class="card card-medium" aria-labelledby="name-heading">
+        <h2 id="name-heading" style="margin:0 0 6px 0;">Hey — I'm Nafees. I solve problems with code.</h2>
+        <p class="muted" style="margin:0 0 12px 0;">A software-focused developer skilled in C, C++, Python and strong in Data Structures & Algorithms. I build efficient, reliable systems and competitive-programming-grade solutions. Currently studying B.Tech (IT) at IEM Kolkata.</p>
 
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:12px;">
-          <div class="badge">C++ • Systems</div>
-          <div class="badge">Data Structures & Algorithms</div>
-          <div class="badge">Competitive Programming</div>
-          <div class="badge">Low-level / Performance</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+          <span class="badge">C / C++</span>
+          <span class="badge">Data Structures & Algorithms</span>
+          <span class="badge">Competitive Programming</span>
+          <span class="badge">Performance & Profiling</span>
         </div>
 
-        <div style="margin-top:16px; display:flex; gap:10px; align-items:center;">
-          <a href="#projects" class="btn btn-primary">See Projects</a>
-          <a href="#contact" class="btn btn-ghost">Contact</a>
+        <div style="margin-top:14px; display:flex; gap:8px; align-items:center;">
+          <a class="btn btn-primary" href="#projects">See Projects</a>
+          <a class="btn btn-ghost" href="#contact">Contact</a>
         </div>
 
-        <small class="muted" style="display:block; margin-top:12px;">
-          Minimal non-technical: IEEE Smart Village mentioned under "Other Work".
-        </small>
-      </div>
+        <small class="note">Education: Institute of Engineering and Management, Kolkata — B.Tech, Information Technology (2023–2027). SGPA: (3rd Semester). </small>
+      </article>
 
-      <!-- profile (small card style) -->
-      <aside class="profile-card card-small" aria-label="Profile">
-        <div class="avatar">
-          <!-- Placeholder: place your profile photo at assets/profile.jpg -->
-          <img src="assets/profile.jpg" alt="Profile photo (replace assets/profile.jpg)" onerror="this.src='https://via.placeholder.com/220x220?text=Profile'">
+      <!-- profile summary (small card appearance) -->
+      <aside class="card card-small" aria-label="Profile summary" style="display:flex;gap:12px;align-items:center;">
+        <div style="width:86px;height:86px;border-radius:10px;overflow:hidden;flex-shrink:0; border:1px solid rgba(0,0,0,0.04);">
+          <img src="assets/profile.jpg" alt="Profile image" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://via.placeholder.com/220x220?text=Profile'">
         </div>
-        <div class="profile-meta">
-          <h3>Khandakar Nafees Hossain</h3>
-          <p class="muted">B.Tech (4th sem) • IEM Kolkata</p>
-          <p class="muted" style="margin-top:8px; font-size:13px;">Email: <a class="link-inline" href="mailto:nafees@example.com">nafees@example.com</a></p>
+        <div>
+          <h3 style="margin:0 0 6px 0;">Khandakar Nafees Hossain</h3>
+          <p class="muted" style="margin:0 0 6px 0;">Junior Researcher (IIFR) — IEM Kolkata (Feb 2024 – Present)</p>
+          <p class="muted" style="margin:0;font-size:13px;">Email: <a class="inline" href="mailto:hossainnafees587@gmail.com">hossainnafees587@gmail.com</a></p>
         </div>
       </aside>
     </section>
 
-    <!-- PROJECTS (use the card-large for featured projects and card-medium for details) -->
-    <section id="projects" style="margin-top:6px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
-        <h3 style="margin:0;">Selected Projects</h3>
-        <p class="muted" style="margin:0; font-size:13px;">Technical focus — C++, algorithms, and systems.</p>
+    <!-- PROJECTS (LARGE cards for featured + medium for others) -->
+    <section id="projects" style="margin-top:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3 style="margin:0;">Selected Projects (Technical Focus)</h3>
+        <p class="muted" style="margin:0;font-size:13px;">C / C++ • Algorithms • Systems</p>
       </div>
 
-      <div class="grid-3">
+      <div class="grid-3" style="margin-top:12px;">
 
-        <!-- Large featured project (card-large) -->
-        <article class="card card-large" aria-labelledby="proj1-title">
+        <!-- FEATURED (LARGE — strong 3D striped ledge) -->
+        <article class="card card-large" aria-labelledby="prj1">
           <div class="project">
-            <div class="thumb">
-              <img src="assets/prj1.jpg" alt="Sorting algorithm visualizer (replace assets/prj1.jpg)" onerror="this.src='https://via.placeholder.com/400x240?text=Project+1'">
-            </div>
+            <div class="thumb"><img src="assets/prj_sort.jpg" alt="Sorting Analyzer" onerror="this.src='https://via.placeholder.com/400x240?text=Sorting+Analyzer'"></div>
             <div class="meta">
-              <h4 id="proj1-title">Sorting Algorithm Analyzer (C++)</h4>
-              <p class="muted">A benchmark suite written in modern C++ to compare multiple sorting algorithms across distributions and input sizes. Focus on in-place algorithms, cache-friendly optimizations, and real-time visualization.</p>
-              <small class="muted" style="margin-top:8px;">Tech: C++17, STL, chrono benchmarking, file I/O</small>
+              <h4 id="prj1">Sorting Algorithm Analyzer (C++)</h4>
+              <p class="muted">A benchmarking suite that compares sorting algorithms across input distributions and sizes. Focus on in-place sorts, cache-friendly implementations, microbenchmarks and real-world performance analysis.</p>
+              <small class="muted">Tech: Modern C++ (C++17), STL, chrono benchmarking, CSV I/O.</small>
+              <div style="margin-top:10px; display:flex; gap:8px;">
+                <a class="btn btn-ghost" href="https://github.com/nafeeshossain" target="_blank" rel="noopener">View Code</a>
+              </div>
             </div>
           </div>
-
-          <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-            <a class="btn btn-ghost" href="#">View Code</a>
-            <a class="btn btn-primary" href="#">Live Demo</a>
-          </div>
         </article>
 
-        <!-- Medium card (left shadow + bottom) -->
-        <article class="card card-medium" aria-labelledby="proj2-title">
-          <h3 id="proj2-title">Graph Traversal Toolkit</h3>
-          <p>Implementations of DFS, BFS, Dijkstra, Bellman-Ford, and A*. Also includes runtime complexity analysis tools and visual testcases to stress-test edge cases.</p>
-          <small class="muted">Tech: C++, adjacency lists & matrices, priority queues</small>
+        <!-- MEDIUM card -->
+        <article class="card card-medium" aria-labelledby="prj2">
+          <h3 id="prj2">Graph Traversal Toolkit</h3>
+          <p>Implementations and analyses of DFS, BFS, Dijkstra, Bellman-Ford, and A* with test harnesses. Includes runtime complexity tests and worst-case stress inputs.</p>
+          <small class="muted">Tech: C++, adjacency lists/matrices, priority queues.</small>
         </article>
 
-        <!-- Medium card -->
-        <article class="card card-medium" aria-labelledby="proj3-title">
-          <h3 id="proj3-title">Binary Tree Playground</h3>
-          <p>Interactive C++ playground for binary trees: construction, traversals, LCA, diameter, balancing checks, and serialisation/deserialisation utilities.</p>
-          <small class="muted">Tech: C++, recursion, iterative traversals</small>
+        <!-- MEDIUM card -->
+        <article class="card card-medium" aria-labelledby="prj3">
+          <h3 id="prj3">Binary Tree Playground</h3>
+          <p>Binary tree utilities: construction, recursive & iterative traversals, LCA, diameter, balancing checks, and serialization tools — focused on robust, clean C++ implementations.</p>
+          <small class="muted">Tech: C++, recursion, iterative stacks, unit tests.</small>
         </article>
 
-        <!-- Small card only bottom shadow -->
-        <article class="card card-small" aria-labelledby="prj4-title">
-          <h3 id="prj4-title">Algo Visual Demos</h3>
-          <p>Small JS/C++ based demos to visualize algorithm steps (sorting, path-finding). Useful for teaching and interview prep.</p>
+        <!-- SMALL card (only bottom shadow) -->
+        <article class="card card-small" aria-labelledby="prj4">
+          <h3 id="prj4">Algo Visual Demos</h3>
+          <p>Interactive visualizations for sorting and path-finding (for teaching and interview prep). Small JS front-ends with C++ solution downloads.</p>
         </article>
 
-        <!-- Medium -->
-        <article class="card card-medium" aria-labelledby="prj5-title">
-          <h3 id="prj5-title">Performance Microbenchmarks</h3>
-          <p>Microbenchmarks for hash maps, vector operations, and custom allocators. Used to choose the right data structures for tight loops and memory-bound tasks.</p>
+        <!-- MEDIUM -->
+        <article class="card card-medium" aria-labelledby="prj5">
+          <h3 id="prj5">Performance Microbenchmarks</h3>
+          <p>Microbenchmarks for maps, vectors, and custom allocators. Used to choose correct structures for memory- and CPU-bound code paths.</p>
         </article>
 
-        <!-- Small -->
-        <article class="card card-small" aria-labelledby="prj6-title">
-          <h3 id="prj6-title">Code Challenges & Solutions</h3>
-          <p>Curated solutions to hard DSA problems (clean, well-documented C++ code) with time/space complexity notes.</p>
+        <!-- SMALL -->
+        <article class="card card-small" aria-labelledby="prj6">
+          <h3 id="prj6">Code Challenges & Solutions</h3>
+          <p>Curated, well-documented C++ solutions to difficult DSA problems, with time/space analysis and edge-case discussions.</p>
         </article>
 
       </div>
     </section>
 
-    <!-- SKILLS -->
-    <section id="skills" style="margin-top:26px;">
-      <h3>Core Skills</h3>
-      <div class="card" style="margin-top:12px;">
-        <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap;">
-          <div style="flex:1; min-width:220px;">
-            <h4 style="margin:0 0 8px 0;">Programming & Systems</h4>
-            <div class="badges">
-              <div class="badge">C++ (STL, Modern C++)</div>
-              <div class="badge">Algorithms & Data Structures</div>
-              <div class="badge">System Design</div>
-              <div class="badge">Competitive Programming</div>
-              <div class="badge">Performance Optimization</div>
-            </div>
-          </div>
+    <!-- SKILLS (SMALL card) -->
+    <section id="skills" style="margin-top:22px;">
+      <h3 style="margin:0 0 8px 0;">Skills</h3>
 
-          <div style="flex:1; min-width:220px;">
-            <h4 style="margin:0 0 8px 0;">Tools & Practices</h4>
-            <div class="badges">
-              <div class="badge">Git / GitHub</div>
-              <div class="badge">Linux / Bash</div>
-              <div class="badge">Unit Testing</div>
-              <div class="badge">Profiling</div>
-            </div>
-          </div>
+      <article class="card card-small" aria-labelledby="skills-list" style="display:flex;flex-direction:column;gap:10px;">
+        <div id="skills-list" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="badge">C</span>
+          <span class="badge">C++ (Modern)</span>
+          <span class="badge">Data Structures & Algorithms</span>
+          <span class="badge">Python</span>
+          <span class="badge">Git / GitHub</span>
+          <span class="badge">Linux</span>
+          <span class="badge">Profiling & Optimization</span>
+          <span class="badge">Unit Testing</span>
         </div>
-      </div>
+        <small class="muted">Focus: algorithmic correctness, performance, and clean implementations.</small>
+      </article>
     </section>
 
-    <!-- OTHER WORK (small, minimal non-technical emphasis) -->
-    <section id="other" style="margin-top:26px;">
-      <h3>Other (Selected)</h3>
-      <div class="grid-2" style="margin-top:12px;">
+    <!-- Other Work (SMALL, minimal emphasis) -->
+    <section id="other" style="margin-top:22px;">
+      <h3 style="margin:0 0 8px 0;">Other (Selected)</h3>
+      <div class="grid-2" style="margin-top:10px;">
         <article class="card card-small" aria-labelledby="other1">
           <h3 id="other1">IEEE Smart Village — Team Lead</h3>
-          <p class="muted">Led a team to 1st position nationally in IdeaRun 2024 — technical design and presentation of a sustainable EV solution. (Mentioned for completeness; my primary focus is software/algorithms.)</p>
+          <p class="muted">Led a multi-utility EV project that received funding and national-level recognition. Listed here for completeness; my primary focus is software & algorithms.</p>
         </article>
 
         <article class="card card-medium" aria-labelledby="other2">
-          <h3 id="other2">Teaching & Mentoring</h3>
-          <p class="muted">Guided juniors in DSA basics and helped prepare contestants for programming contests and campus interviews.</p>
+          <h3 id="other2">Junior Researcher (IIFR), IEM Kolkata</h3>
+          <p class="muted">Collaborated on EV prototype mechanical & electrical integration; contributed to testing and prototyping (Feb 2024 – Present).</p>
         </article>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" style="margin-top:26px;">
-      <h3>Contact</h3>
-      <div class="card" style="margin-top:12px; display:grid; grid-template-columns: 1fr 320px; gap:18px;">
-        <form id="contactForm" style="display:flex; flex-direction:column; gap:10px;">
-          <input name="name" placeholder="Your name" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);">
-          <input name="email" type="email" placeholder="Email" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);">
-          <textarea name="message" rows="5" placeholder="Message" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);"></textarea>
-          <div style="display:flex; gap:8px;">
+    <section id="contact" style="margin-top:22px;">
+      <h3 style="margin:0 0 8px 0;">Contact</h3>
+
+      <div class="card" style="display:grid;grid-template-columns:1fr 320px;gap:16px;">
+        <form id="contactForm" style="display:flex;flex-direction:column;gap:10px;">
+          <input name="name" placeholder="Your name" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);">
+          <input name="email" type="email" placeholder="Email" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);">
+          <textarea name="message" rows="5" placeholder="Message" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);"></textarea>
+          <div style="display:flex;gap:8px;">
             <button class="btn btn-primary" type="submit" style="border:none;">Send</button>
             <button class="btn btn-ghost" type="reset">Reset</button>
           </div>
           <div id="formStatus" class="muted"></div>
         </form>
 
-        <aside style="padding:8px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92)); border:1px solid rgba(10,10,10,0.03);">
-          <h4 style="margin:0 0 6px 0;">Quick Info</h4>
-          <p class="muted" style="margin:0 0 8px 0;">Email: <a class="link-inline" href="mailto:nafees@example.com">nafees@example.com</a></p>
+        <aside style="padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));border:1px solid rgba(0,0,0,0.04);">
+          <h4 style="margin:0 0 6px 0;">Quick info</h4>
           <p class="muted" style="margin:0 0 8px 0;">Phone: +91 9564289091</p>
-          <p class="muted" style="margin:0">Resume: <a class="link-inline" href="assets/resume.pdf" download>Download (PDF)</a></p>
+          <p class="muted" style="margin:0 0 8px 0;">Email: <a class="inline" href="mailto:hossainnafees587@gmail.com">hossainnafees587@gmail.com</a></p>
+          <p class="muted" style="margin:0 0 8px 0;">LinkedIn: <a class="inline" href="https://www.linkedin.com/in/nafeeshossain/" target="_blank" rel="noopener">nafeeshossain</a></p>
+          <p class="muted" style="margin:0">GitHub: <a class="inline" href="https://github.com/nafeeshossain" target="_blank" rel="noopener">nafeeshossain</a></p>
         </aside>
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="site-footer" role="contentinfo">
-      © <strong>Khandakar Nafees Hossain</strong> — Software Engineer • C++ • DSA • Built with HTML/CSS. Hosted on GitHub Pages.
+    <footer style="margin-top:18px;text-align:center;color:var(--muted);font-size:13px;">
+      © Khandakar Nafees Hossain — Software Engineer • C / C++ • DSA
     </footer>
-  </div>
 
-  <!-- Minimal JS for form demo + small interactions -->
+  </main>
+
   <script>
-    // Demo contact form (client-side only). Replace with Formspree / Netlify forms / backend as needed.
+    // demo contact form (client-side only)
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
       const status = document.getElementById('formStatus');
-      status.textContent = 'Sending… (demo only)';
-      setTimeout(()=> {
-        status.textContent = 'Message sent — thank you! I will reply soon.';
-        this.reset();
-      }, 900);
-    });
-
-    // Small accessibility: focus outline on keyboard nav
-    document.body.addEventListener('keydown', function(e){
-      if(e.key === 'Tab') document.documentElement.style.scrollBehavior = 'smooth';
+      status.textContent = 'Sending... (demo)';
+      setTimeout(()=> { status.textContent = 'Message sent — thanks!'; this.reset(); }, 900);
     });
   </script>
+
 </body>
 </html>
