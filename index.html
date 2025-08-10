@@ -1,481 +1,560 @@
+<!--
+  index.html
+  - Full single-file professional portfolio template (design-focused)
+  - How to use:
+      1. Create repo: <your-username>.github.io
+      2. Put this index.html in root.
+      3. Add images/files in /assets/ (create folder)
+         - Profile image: assets/profile.jpg
+         - Project images: assets/prj1.jpg, assets/prj2.jpg, ...
+         - Resume PDF: assets/resume.pdf
+      4. Commit & push → Settings → Pages → main / root (if needed)
+  - Replace placeholders (email, phone, project descriptions) with your real info.
+  - Everything is client-side static; works on GitHub Pages, Netlify, Vercel, etc.
+-->
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Nafees Hossain — Portfolio</title>
-  <meta name="description" content="Nafees Hossain — Tech, Projects, Creative Techtians, IEEE Smart Village winner" />
+  <title>Nafees Hossain — Software Engineer | C++ | DSA</title>
+  <meta name="description" content="Portfolio of Nafees Hossain — Software Engineer focused on C++, Data Structures & Algorithms, and systems programming." />
+  <meta name="author" content="Khandakar Nafees Hossain" />
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
+  /* =======================================================
+     VARIABLES & RESET
+     ======================================================= */
     :root{
-      --bg1: #0e0f1a;
-      --accent: #00f6ff;
-      --accent2: #ff4dd2;
-      --glass: rgba(255,255,255,0.06);
-      --glass-2: rgba(255,255,255,0.03);
-      --muted: #9aa0ad;
+      --bg-dark: #0b0f1a;
+      --glass: rgba(255,255,255,0.04);
+      --muted: #96a0b3;
+      --card-radius: 14px;
+      --accent1: #ff6bcb;  /* pink */
+      --accent2: #00e1ff;  /* cyan */
+      --accent3: #ffd166;  /* yellow */
+      --text: #0c1220;
+      --surface: rgba(255,255,255,0.98);
+      --max-width: 1180px;
+      --shadow-strong: rgba(2,6,23,0.72);
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,150,200,0.06), transparent),
-                  radial-gradient(1000px 500px at 90% 90%, rgba(255,80,160,0.04), transparent),
-                  var(--bg1);
-      color:#e6eef8;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      overflow-x:hidden;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 30%, #fbc2eb 55%, #a6c1ee 100%);
+      color:var(--text);
+      line-height:1.45;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
-    /* Header / Nav */
-    header{
+  /* =======================================================
+     PAINTING TEXTURE (SVG overlay & soft animated gradients)
+     ======================================================= */
+    /* full-screen decorative SVG brush layers - pointer-events none */
+    .art-layer {
       position:fixed;
-      top:16px;
-      left:50%;
-      transform:translateX(-50%);
-      width:92%;
-      max-width:1100px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      padding:10px 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border-radius:14px;
-      backdrop-filter: blur(6px) saturate(120%);
-      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
-      border: 1px solid rgba(255,255,255,0.04);
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      mix-blend-mode:screen;
+      opacity:0.95;
     }
-    .brand{
+    /* subtle animated radial gradient overlay */
+    .paint-grad {
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(600px 400px at 10% 20%, rgba(255,255,255,0.14), transparent 10%),
+        radial-gradient(600px 400px at 90% 80%, rgba(0,0,0,0.06), transparent 20%);
+      animation: slowPan 18s ease-in-out infinite;
+      mix-blend-mode: overlay;
+      opacity:0.9;
+    }
+    @keyframes slowPan {
+      0%{transform:translateY(-4px) scale(1); opacity:0.92}
+      50%{transform:translateY(6px) scale(1.02); opacity:0.98}
+      100%{transform:translateY(-4px) scale(1); opacity:0.92}
+    }
+
+  /* =======================================================
+     LAYOUT CONTAINER
+     ======================================================= */
+    .page {
+      position:relative;
+      z-index:2; /* above art layers */
+      width:100%;
+      max-width:var(--max-width);
+      margin: 40px auto;
+      padding: 28px;
+    }
+
+    header.site-header{
       display:flex;
+      gap:20px;
       align-items:center;
-      gap:12px;
+      justify-content:space-between;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      border-radius: 16px;
+      padding:16px 22px;
+      box-shadow: 0 20px 50px rgba(6,10,30,0.3);
+      border: 1px solid rgba(10,10,10,0.04);
+      margin-bottom:28px;
+      align-items:center;
+    }
+
+    .brand {
+      display:flex;
+      gap:14px;
+      align-items:center;
       text-decoration:none;
       color:inherit;
     }
-    .logo{
-      width:44px;height:44px;border-radius:10px;
-      display:grid;place-items:center;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow:0 6px 20px rgba(0,0,0,0.5), 0 0 18px rgba(0,246,255,0.07);
-      font-weight:800;
-      color:#081021;
-      font-size:18px;
+    .brand-logo{
+      width:64px; height:64px; border-radius:12px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display:grid; place-items:center; font-weight:800; color:#071022; font-size:18px;
     }
-    nav a{
-      color:var(--muted);
-      text-decoration:none;
-      margin-left:18px;
-      font-weight:600;
-      transition: all .18s ease;
-    }
-    nav a:hover{ color:var(--accent); transform:translateY(-2px); }
+    .brand h1{ font-size:20px; margin:0; letter-spacing:-0.2px; }
+    .brand p{ margin:0; font-size:12px; color:var(--muted); margin-top:4px; }
 
-    /* Hero */
-    .hero{
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:120px 20px 60px;
-      position:relative;
+    .header-actions{ display:flex; gap:10px; align-items:center; }
+
+    .btn {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer;
+      border:0; text-decoration:none;
     }
-    .container{
-      width:100%;
-      max-width:1100px;
-      margin:0 auto;
+    .btn-ghost{ background:transparent; color:var(--accent2); border:1px solid rgba(0,0,0,0.06); }
+    .btn-primary{ background: linear-gradient(90deg,var(--accent2),var(--accent1)); color:#071022; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
+  /* =======================================================
+     HERO / INTRO
+     ======================================================= */
+    .hero {
       display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:32px;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
       align-items:center;
+      margin-bottom:28px;
     }
-    @media (max-width:920px){
-      .container{ grid-template-columns: 1fr; padding:0 10px; }
-      header{ left:10px; transform:none; width:calc(100% - 20px); }
+    @media (max-width:980px){
+      .hero{ grid-template-columns: 1fr; }
     }
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:20px;
+    .intro {
       padding:28px;
-      border:1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 20px 60px rgba(5,8,20,0.6);
+      border-radius:16px;
+      background: rgba(255,255,255,0.95);
+      border:1px solid rgba(10,10,10,0.03);
+      box-shadow: 0 30px 70px rgba(8,12,20,0.12);
     }
 
-    .hero-left h1{
+    .intro h2{
       margin:0 0 8px 0;
-      font-size:40px;
-      line-height:1.02;
-      letter-spacing:-0.6px;
-      text-shadow: 0 6px 30px rgba(1,8,16,0.6);
-      background: linear-gradient(90deg, #ffffff, #bfefff 40%, #ffd0f2 80%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      font-size:28px;
+      letter-spacing:-0.3px;
     }
-    .hero-left p.lead{
-      margin:0 0 18px 0;
+    .intro p.lead{
+      margin:0 0 12px 0;
       color:var(--muted);
-      font-size:16px;
-      max-width:70ch;
+      font-size:15px;
     }
 
-    .cta{
-      display:flex;gap:12px;margin-top:10px;
-    }
-    .btn{
-      padding:10px 16px;border-radius:12px;font-weight:700;border:0;cursor:pointer;
-      display:inline-flex;align-items:center;gap:10px;
-      transition:transform .12s ease, box-shadow .12s ease;
-      text-decoration:none;color:#071022;
-    }
-    .btn-primary{
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      box-shadow: 0 10px 30px rgba(0,246,255,0.08);
-    }
-    .btn-ghost{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.06);
-      color:var(--accent);
-      padding:9px 14px;
-      backdrop-filter: blur(6px);
-    }
-    .btn:active{ transform: translateY(1px); }
-
-    /* hero-right profile */
-    .profile{
+    /* profile card on right inside hero (small card style with avatar) */
+    .profile-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+      padding:18px;
+      border-radius:14px;
+      border:1px solid rgba(10,10,10,0.03);
       display:flex;
-      flex-direction:column;
-      gap:14px;
+      gap:12px;
       align-items:center;
-      text-align:center;
+      box-shadow: 0 12px 40px rgba(6,10,30,0.08);
     }
-    .avatar{
-      width:220px;height:220px;border-radius:18px;overflow:hidden;
-      border:1px solid rgba(255,255,255,0.05);
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      position:relative;
-      box-shadow: 0 24px 60px rgba(6,10,25,0.7);
+    .avatar {
+      width:92px; height:92px; border-radius:12px; overflow:hidden; flex-shrink:0;
+      box-shadow: 0 12px 32px rgba(6,10,30,0.12);
     }
     .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .tag{
-      padding:6px 10px;border-radius:999px;font-weight:700;background:var(--glass);
-      font-size:13px;color:var(--muted);
-      border:1px solid rgba(255,255,255,0.02);
+    .profile-meta h3{ margin:0; font-size:16px; }
+    .profile-meta p{ margin:6px 0 0 0; color:var(--muted); font-size:13px; }
+
+  /* =======================================================
+     CARD STYLES: medium / small / large
+     ======================================================= */
+
+    /* shared base for cards */
+    .card {
+      position:relative;
+      background: white;
+      border-radius: var(--card-radius);
+      padding:18px;
+      border:1px solid rgba(10,10,10,0.04);
+      overflow:visible; /* allow decorative pseudo elements */
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .card h3 { margin:0 0 8px 0; font-size:16px; }
+    .card p { margin:0; color:var(--muted); font-size:14px; }
+    .card small { color:var(--muted); display:block; margin-top:10px; font-size:13px; }
+
+    /* 1) Medium card: left-side shadow + slight bottom shadow */
+    .card-medium {
+      box-shadow:
+         /* left-side colored glow for depth */ -18px 0 28px -18px rgba(0,225,255,0.10),
+         /* subtle bottom shadow */ 0 10px 22px -12px rgba(3,6,18,0.65);
+      border-radius:14px;
+    }
+    /* optional left accent strip (thin) */
+    .card-medium::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:12%;
+      bottom:12%;
+      width:8px;
+      border-top-right-radius:8px;
+      border-bottom-right-radius:8px;
+      background: linear-gradient(180deg, var(--accent2), var(--accent1));
+      box-shadow: 0 8px 30px rgba(0,225,255,0.06);
     }
 
-    /* sections */
-    section{ max-width:1100px;margin:36px auto;padding:0 20px; }
-    h2.section-title{
-      margin:8px 0 18px 0;font-size:20px;color:#eaf6ff;
-      display:flex;align-items:center;gap:12px;font-weight:800;
+    /* 2) Small card: only bottom shadow */
+    .card-small{
+      box-shadow: 0 10px 26px -14px rgba(2,6,23,0.55);
+      border-radius:12px;
+      padding:12px 14px;
+      max-width:420px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3,1fr);
-      gap:18px;
-    }
-    @media (max-width:920px){ .grid{ grid-template-columns: repeat(2,1fr); } }
-    @media (max-width:560px){ .grid{ grid-template-columns: 1fr; } }
-
-    .proj{
-      padding:16px;border-radius:14px;background:linear-gradient(180deg,var(--glass),var(--glass-2));
-      position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);
-    }
-    .proj h3{ margin:0 0 8px 0; font-size:16px; }
-    .proj p{ margin:0;color:var(--muted); font-size:13px; line-height:1.3; }
-    .proj .tags{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
-    .tag-pill{ font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted); border:1px solid rgba(255,255,255,0.02); }
-
-    /* footer */
-    footer{
-      text-align:center;padding:28px 20px;margin-top:30px;color:var(--muted);
+    /* 3) Large card: left-side shadow + striped bottom 3D ledge */
+    .card-large{
+      border-radius:16px;
+      padding:22px;
+      box-shadow:
+        -32px 0 60px -36px rgba(6,18,40,0.6), /* left-side deep shadow */
+        0 30px 60px -30px rgba(2,6,23,0.72);
+      margin-bottom:56px; /* give space for the ledge so it doesn't overlap content */
     }
 
-    /* neon border line */
-    .neon-border{
-      position:absolute;inset: -2px;border-radius:20px;pointer-events:none;
-      box-shadow: 0 0 40px rgba(0,246,255,0.06), inset 0 0 60px rgba(255,77,210,0.02);
-      mix-blend-mode: screen;
+    /* striped bottom ledge (3D effect). The ::after is positioned under the card visually */
+    .card-large::after{
+      content:"";
+      position:absolute;
+      left:12px;
+      right:12px;
+      bottom:-22px;              /* drop below card */
+      height:26px;               /* thickness of ledge */
+      border-bottom-left-radius:14px;
+      border-bottom-right-radius:14px;
+      background:
+        /* stripe pattern */ repeating-linear-gradient(
+          45deg,
+          rgba(0,0,0,0.06) 0px,
+          rgba(255,255,255,0.02) 6px,
+          rgba(0,0,0,0.06) 12px
+        ),
+        /* colored base for a richer look */
+        linear-gradient(90deg, rgba(255,107,203,0.12), rgba(0,225,255,0.08));
+      box-shadow: 0 24px 40px -24px var(--shadow-strong);
+      z-index:-1; /* visually below the card body */
+      transform: translateZ(0);
     }
 
-    /* little socials */
-    .socials{ display:flex;gap:12px; justify-content:center; margin-top:10px; }
-    .socials a{ display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); text-decoration:none; color:var(--muted); transition:transform .12s ease; }
-    .socials a:hover{ transform:translateY(-4px); color:var(--accent); box-shadow: 0 12px 40px rgba(0,246,255,0.03); }
+  /* card media & project thumbnail helpers */
+    .project {
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .project .thumb {
+      width:120px; height:80px; border-radius:10px; overflow:hidden; flex-shrink:0;
+      box-shadow: 0 12px 30px rgba(6,10,30,0.06);
+      border:1px solid rgba(10,10,10,0.03);
+    }
+    .project .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .project .meta h4{ margin:0 0 6px 0; font-size:15px; }
+    .project .meta p{ margin:0; color:var(--muted); font-size:13px; }
 
-    /* small utilities */
-    .muted { color:var(--muted); font-size:14px; }
-    .center { text-align:center; }
+  /* grid layout for sections */
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .grid-2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
+    @media (max-width:1100px){ .grid-3{ grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:680px){ .grid-3, .grid-2 { grid-template-columns: 1fr; } .hero{grid-template-columns:1fr} }
 
-    /* canvas background (particles) */
-    #bg-canvas{ position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.24; }
+  /* skill badges */
+    .badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .badge {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+      padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; color:#0c1220;
+      box-shadow: 0 8px 22px rgba(6,10,30,0.06);
+      border: 1px solid rgba(10,10,10,0.03);
+    }
 
+  /* footer */
+    footer.site-footer{
+      margin-top:28px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+  /* small interactions */
+    a.link-inline{ color:var(--accent2); text-decoration:none; font-weight:700; }
+    .muted{ color:var(--muted); font-size:13px; }
   </style>
 </head>
 <body>
 
-  <!-- animated background canvas -->
-  <canvas id="bg-canvas"></canvas>
+  <!-- Decorative art layers (SVG brush strokes) -->
+  <div class="art-layer" aria-hidden="true">
+    <!-- Inline SVG: brush-style blobs - purely decorative -->
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="none" style="width:100%; height:100vh; display:block;">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff9a9e" stop-opacity="0.85"/>
+          <stop offset="1" stop-color="#fecfef" stop-opacity="0.72"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="0" x2="1">
+          <stop offset="0" stop-color="#a1c4fd" stop-opacity="0.72"/>
+          <stop offset="1" stop-color="#c2e9fb" stop-opacity="0.62"/>
+        </linearGradient>
+      </defs>
 
-  <header>
-    <a class="brand" href="#home">
-      <div class="logo">NH</div>
-      <div>
-        <div style="font-weight:800">Nafees Hossain</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:-2px">Developer • Maker • Content</div>
+      <g transform="translate(0,-80)">
+        <path d="M0 300 C120 200 260 160 420 190 C680 240 780 120 1000 180 C1150 220 1200 120 1200 120 L1200 600 L0 600 Z"
+              fill="url(#g1)" opacity="0.95"></path>
+
+        <path d="M0 120 C180 60 360 60 540 120 C720 180 900 80 1200 120 L1200 600 L0 600 Z"
+              fill="url(#g2)" opacity="0.62"></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="paint-grad" aria-hidden="true"></div>
+
+  <!-- Main page container -->
+  <div class="page" role="main" aria-labelledby="main-title">
+
+    <!-- Header -->
+    <header class="site-header" role="banner">
+      <a class="brand" href="#">
+        <div class="brand-logo">NH</div>
+        <div>
+          <h1>Khandakar Nafees Hossain</h1>
+          <p>Software Engineer • C++ • Data Structures & Algorithms</p>
+        </div>
+      </a>
+
+      <div class="header-actions" role="navigation" aria-label="Primary actions">
+        <a class="btn btn-ghost" href="#projects">Projects</a>
+        <a class="btn btn-primary" href="assets/resume.pdf" download>Download Resume</a>
       </div>
-    </a>
+    </header>
 
-    <nav aria-label="Main navigation">
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+    <!-- HERO -->
+    <section class="hero" aria-label="Introduction">
+      <div class="intro card">
+        <h2 id="main-title">Hey — I solve problems with code.</h2>
+        <p class="lead">I'm a software engineer focused on system design, competitive programming (C++), and building reliable algorithms and data structures. I design clean, high-performance solutions for real problems.</p>
 
-  <main class="hero" id="home" role="main">
-    <div class="container card" style="position:relative; z-index:2;">
-      <div class="hero-left">
-        <h1>Hi — I build cool things that solve real problems.</h1>
-        <p class="lead">I’m Nafees, a creative tech enthusiast and winner of IEEE Smart Village. I work on embedded systems, web apps, and energy projects. I love clean code, smart hardware, and telling stories with tech.</p>
-
-        <div class="cta">
-          <a class="btn btn-primary" href="#projects" aria-label="See projects">
-            ▶ See Projects
-          </a>
-          <a class="btn btn-ghost" href="mailto:nafees@example.com" aria-label="Email me">
-            ✉️ Contact
-          </a>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:12px;">
+          <div class="badge">C++ • Systems</div>
+          <div class="badge">Data Structures & Algorithms</div>
+          <div class="badge">Competitive Programming</div>
+          <div class="badge">Low-level / Performance</div>
         </div>
 
-        <div style="margin-top:18px; display:flex; gap:12px; align-items:center;">
-          <div style="flex:1; display:flex; gap:8px; flex-wrap:wrap;">
-            <span class="tag">IEEE Smart Village — 1st Place</span>
-            <span class="tag">Embedded Systems</span>
-            <span class="tag">C • Arduino • MATLAB</span>
+        <div style="margin-top:16px; display:flex; gap:10px; align-items:center;">
+          <a href="#projects" class="btn btn-primary">See Projects</a>
+          <a href="#contact" class="btn btn-ghost">Contact</a>
+        </div>
+
+        <small class="muted" style="display:block; margin-top:12px;">
+          Minimal non-technical: IEEE Smart Village mentioned under "Other Work".
+        </small>
+      </div>
+
+      <!-- profile (small card style) -->
+      <aside class="profile-card card-small" aria-label="Profile">
+        <div class="avatar">
+          <!-- Placeholder: place your profile photo at assets/profile.jpg -->
+          <img src="assets/profile.jpg" alt="Profile photo (replace assets/profile.jpg)" onerror="this.src='https://via.placeholder.com/220x220?text=Profile'">
+        </div>
+        <div class="profile-meta">
+          <h3>Khandakar Nafees Hossain</h3>
+          <p class="muted">B.Tech (4th sem) • IEM Kolkata</p>
+          <p class="muted" style="margin-top:8px; font-size:13px;">Email: <a class="link-inline" href="mailto:nafees@example.com">nafees@example.com</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS (use the card-large for featured projects and card-medium for details) -->
+    <section id="projects" style="margin-top:6px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
+        <h3 style="margin:0;">Selected Projects</h3>
+        <p class="muted" style="margin:0; font-size:13px;">Technical focus — C++, algorithms, and systems.</p>
+      </div>
+
+      <div class="grid-3">
+
+        <!-- Large featured project (card-large) -->
+        <article class="card card-large" aria-labelledby="proj1-title">
+          <div class="project">
+            <div class="thumb">
+              <img src="assets/prj1.jpg" alt="Sorting algorithm visualizer (replace assets/prj1.jpg)" onerror="this.src='https://via.placeholder.com/400x240?text=Project+1'">
+            </div>
+            <div class="meta">
+              <h4 id="proj1-title">Sorting Algorithm Analyzer (C++)</h4>
+              <p class="muted">A benchmark suite written in modern C++ to compare multiple sorting algorithms across distributions and input sizes. Focus on in-place algorithms, cache-friendly optimizations, and real-time visualization.</p>
+              <small class="muted" style="margin-top:8px;">Tech: C++17, STL, chrono benchmarking, file I/O</small>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn btn-ghost" href="#">View Code</a>
+            <a class="btn btn-primary" href="#">Live Demo</a>
+          </div>
+        </article>
+
+        <!-- Medium card (left shadow + bottom) -->
+        <article class="card card-medium" aria-labelledby="proj2-title">
+          <h3 id="proj2-title">Graph Traversal Toolkit</h3>
+          <p>Implementations of DFS, BFS, Dijkstra, Bellman-Ford, and A*. Also includes runtime complexity analysis tools and visual testcases to stress-test edge cases.</p>
+          <small class="muted">Tech: C++, adjacency lists & matrices, priority queues</small>
+        </article>
+
+        <!-- Medium card -->
+        <article class="card card-medium" aria-labelledby="proj3-title">
+          <h3 id="proj3-title">Binary Tree Playground</h3>
+          <p>Interactive C++ playground for binary trees: construction, traversals, LCA, diameter, balancing checks, and serialisation/deserialisation utilities.</p>
+          <small class="muted">Tech: C++, recursion, iterative traversals</small>
+        </article>
+
+        <!-- Small card only bottom shadow -->
+        <article class="card card-small" aria-labelledby="prj4-title">
+          <h3 id="prj4-title">Algo Visual Demos</h3>
+          <p>Small JS/C++ based demos to visualize algorithm steps (sorting, path-finding). Useful for teaching and interview prep.</p>
+        </article>
+
+        <!-- Medium -->
+        <article class="card card-medium" aria-labelledby="prj5-title">
+          <h3 id="prj5-title">Performance Microbenchmarks</h3>
+          <p>Microbenchmarks for hash maps, vector operations, and custom allocators. Used to choose the right data structures for tight loops and memory-bound tasks.</p>
+        </article>
+
+        <!-- Small -->
+        <article class="card card-small" aria-labelledby="prj6-title">
+          <h3 id="prj6-title">Code Challenges & Solutions</h3>
+          <p>Curated solutions to hard DSA problems (clean, well-documented C++ code) with time/space complexity notes.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" style="margin-top:26px;">
+      <h3>Core Skills</h3>
+      <div class="card" style="margin-top:12px;">
+        <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px;">
+            <h4 style="margin:0 0 8px 0;">Programming & Systems</h4>
+            <div class="badges">
+              <div class="badge">C++ (STL, Modern C++)</div>
+              <div class="badge">Algorithms & Data Structures</div>
+              <div class="badge">System Design</div>
+              <div class="badge">Competitive Programming</div>
+              <div class="badge">Performance Optimization</div>
+            </div>
+          </div>
+
+          <div style="flex:1; min-width:220px;">
+            <h4 style="margin:0 0 8px 0;">Tools & Practices</h4>
+            <div class="badges">
+              <div class="badge">Git / GitHub</div>
+              <div class="badge">Linux / Bash</div>
+              <div class="badge">Unit Testing</div>
+              <div class="badge">Profiling</div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <aside class="profile card" aria-label="Profile card">
-        <div class="avatar" title="Profile photo">
-          <!-- Replace the URL with your profile picture or keep this placeholder -->
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=0e3b9b2a1f1f9f834f9b1519b8f05ac3" alt="Nafees profile">
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:18px;font-weight:800">Khandakar Nafees Hossain</div>
-          <div class="muted">4th semester • IEM Kolkata</div>
-        </div>
-        <div class="tag">Tech + Analysis • Content Creator</div>
+    <!-- OTHER WORK (small, minimal non-technical emphasis) -->
+    <section id="other" style="margin-top:26px;">
+      <h3>Other (Selected)</h3>
+      <div class="grid-2" style="margin-top:12px;">
+        <article class="card card-small" aria-labelledby="other1">
+          <h3 id="other1">IEEE Smart Village — Team Lead</h3>
+          <p class="muted">Led a team to 1st position nationally in IdeaRun 2024 — technical design and presentation of a sustainable EV solution. (Mentioned for completeness; my primary focus is software/algorithms.)</p>
+        </article>
 
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <a class="btn btn-primary" href="#" onclick="downloadResume()">Download Resume</a>
-          <a class="btn btn-ghost" href="#contact">Let's talk</a>
-        </div>
-
-        <div class="neon-border" aria-hidden="true"></div>
-      </aside>
-    </div>
-  </main>
-
-  <!-- Projects -->
-  <section id="projects">
-    <h2 class="section-title">Projects</h2>
-    <div class="grid">
-      <article class="proj card">
-        <h3>Smart Solar-Powered EV (V2V Charging)</h3>
-        <p>Multi-purpose electric vehicle with wire & wireless charging, irrigation services and microgrid integration. Built prototypes and pitch deck for IEEE Smart Village.</p>
-        <div class="tags">
-          <span class="tag-pill">C</span>
-          <span class="tag-pill">Arduino</span>
-          <span class="tag-pill">Power Electronics</span>
-        </div>
-      </article>
-
-      <article class="proj card">
-        <h3>Arduino Voice-Controlled Lights</h3>
-        <p>Voice-activated lighting system using Arduino and an L293D motor driver for smart home demos and accessibility projects.</p>
-        <div class="tags">
-          <span class="tag-pill">Embedded</span>
-          <span class="tag-pill">IoT</span>
-        </div>
-      </article>
-
-      <article class="proj card">
-        <h3>Train Journey Alternative Route</h3>
-        <p>Route-finding app for alternate train routes during delays using graph algorithms like Dijkstra and BFS. Built as a student project in C.</p>
-        <div class="tags">
-          <span class="tag-pill">Algorithms</span>
-          <span class="tag-pill">C</span>
-        </div>
-      </article>
-
-      <!-- Add more project cards as needed -->
-      <article class="proj card">
-        <h3>AI Allergy Detection (Concept)</h3>
-        <p>Prototype app idea to scan QR ingredients and detect allergens and harmful chemicals with recommendations for users.</p>
-        <div class="tags">
-          <span class="tag-pill">Python</span>
-          <span class="tag-pill">ML</span>
-        </div>
-      </article>
-
-      <article class="proj card">
-        <h3>Data Visualizations & Analysis</h3>
-        <p>Small demos with MATLAB Online and JS visualizations explaining trends and performance of algorithms and systems.</p>
-        <div class="tags">
-          <span class="tag-pill">MATLAB</span>
-          <span class="tag-pill">D3</span>
-        </div>
-      </article>
-
-      <article class="proj card">
-        <h3>Creative Techtians — Team Lead</h3>
-        <p>Led a team from top 10 to 1st place nationally in IEEE Smart Village (IdeaRun 2024) — strategy, PPT design, presenter coaching and mentor coordination.</p>
-        <div class="tags">
-          <span class="tag-pill">Leadership</span>
-          <span class="tag-pill">Presentation</span>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <h2 class="section-title">About</h2>
-    <div class="card" style="padding:20px;">
-      <p class="muted">I’m a 4th semester IT student at IEM, Kolkata. I enjoy building embedded systems and web projects, participating in competitions, and creating technical content. I started tabla in 2013 — so rhythm + code is my vibe.</p>
-      <div style="display:flex; gap:16px; margin-top:12px; flex-wrap:wrap;">
-        <div style="min-width:160px;">
-          <strong>Skills</strong>
-          <div class="muted">C • Arduino • MATLAB • HTML/CSS/JS • Git</div>
-        </div>
-        <div style="min-width:160px;">
-          <strong>Contact</strong>
-          <div class="muted">nafees@example.com • +91 9564289091</div>
-        </div>
-        <div style="min-width:160px;">
-          <strong>Available for</strong>
-          <div class="muted">Internships • Collaborations • Tech Content</div>
-        </div>
+        <article class="card card-medium" aria-labelledby="other2">
+          <h3 id="other2">Teaching & Mentoring</h3>
+          <p class="muted">Guided juniors in DSA basics and helped prepare contestants for programming contests and campus interviews.</p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2 class="section-title">Contact</h2>
-    <div class="card" style="display:grid;grid-template-columns:1fr 360px;gap:18px;padding:18px;">
-      <form id="contactForm" style="display:flex;flex-direction:column;gap:12px;">
-        <input name="name" placeholder="Your name" required style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;">
-        <input name="email" type="email" placeholder="Email" required style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;">
-        <textarea name="message" rows="5" placeholder="Message" required style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;"></textarea>
-        <div style="display:flex;gap:8px;">
-          <button type="submit" class="btn btn-primary">Send</button>
-          <button type="reset" class="btn btn-ghost">Reset</button>
-        </div>
-        <div id="formStatus" class="muted" style="margin-top:6px"></div>
-      </form>
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:26px;">
+      <h3>Contact</h3>
+      <div class="card" style="margin-top:12px; display:grid; grid-template-columns: 1fr 320px; gap:18px;">
+        <form id="contactForm" style="display:flex; flex-direction:column; gap:10px;">
+          <input name="name" placeholder="Your name" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);">
+          <input name="email" type="email" placeholder="Email" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);">
+          <textarea name="message" rows="5" placeholder="Message" required style="padding:12px;border-radius:10px;border:1px solid rgba(10,10,10,0.04);"></textarea>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary" type="submit" style="border:none;">Send</button>
+            <button class="btn btn-ghost" type="reset">Reset</button>
+          </div>
+          <div id="formStatus" class="muted"></div>
+        </form>
 
-      <div style="padding:8px; display:flex; flex-direction:column; gap:8px; justify-content:center; align-items:center;">
-        <div class="muted center">Prefer email? <br> <strong>nafees@example.com</strong></div>
-        <div class="socials" aria-hidden="false">
-          <a href="#" title="GitHub" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 .5C5.73.5.99 5.24.99 11.52c0 4.7 3.04 8.68 7.25 10.08.53.1.72-.23.72-.51 0-.25-.01-.91-.01-1.79-2.95.64-3.58-1.42-3.58-1.42-.48-1.24-1.17-1.57-1.17-1.57-.96-.66.07-.65.07-.65 1.06.08 1.61 1.09 1.61 1.09.94 1.61 2.47 1.15 3.07.88.09-.69.37-1.15.67-1.41-2.36-.27-4.84-1.18-4.84-5.27 0-1.16.41-2.11 1.09-2.86-.11-.27-.48-1.36.1-2.83 0 0 .89-.29 2.92 1.09a10.2 10.2 0 012.66-.36c.9 0 1.8.12 2.66.36 2.03-1.38 2.92-1.09 2.92-1.09.58 1.47.21 2.56.1 2.83.68.75 1.09 1.7 1.09 2.86 0 4.1-2.48 5-4.85 5.26.38.33.72.98.72 1.98 0 1.43-.01 2.58-.01 2.93 0 .28.19.61.73.5 4.22-1.4 7.25-5.38 7.25-10.08C23 5.24 18.27.5 12 .5z" fill="currentColor"/></svg></a>
-          <a href="#" title="LinkedIn" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6 1.12 6 0 4.88 0 3.5 0 2.12 1.12 1 2.5 1 3.9 1 4.98 2.12 4.98 3.5zM.5 8.5H4.5V24H.5zM8.5 8.5H12.1V10.6c.6-.9 1.8-1.8 3.6-1.8 3.8 0 4.5 2.5 4.5 5.7V24h-4V17.1c0-1.6 0-3.6-2.1-3.6-2.1 0-2.4 1.6-2.4 3.4V24H8.5z" fill="currentColor"/></svg></a>
-          <a href="#" title="YouTube" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M23.5 6.8s-.2-1.7-.8-2.5C21.3 3 18.8 3 18.8 3h-.1C15 3 12 3 12 3H11c0 0-3 .1-7 .1-2.8 0-3.9 0-3.9 0-.9.1-2.3.4-3.2 1.3C-.9 6.7-.9 11.5-.9 11.5s0 4.7.2 6.7c.1 1.2.8 2.1 1.5 2.7.9.8 2.1 1 3.2 1.1 1.6.1 6.5.2 6.5.2s3 .1 7 .1c3.6 0 6.3-.1 6.3-.1 0 0 2.5-.1 3.9-1.1 1.1-.8 1.6-2.2 1.8-3.9.2-1.9.3-6.7.3-6.7s.1-4.8-.1-6.6zM9.8 15.6V7.4l6.4 4.1-6.4 4.1z" fill="currentColor"/></svg></a>
-        </div>
+        <aside style="padding:8px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92)); border:1px solid rgba(10,10,10,0.03);">
+          <h4 style="margin:0 0 6px 0;">Quick Info</h4>
+          <p class="muted" style="margin:0 0 8px 0;">Email: <a class="link-inline" href="mailto:nafees@example.com">nafees@example.com</a></p>
+          <p class="muted" style="margin:0 0 8px 0;">Phone: +91 9564289091</p>
+          <p class="muted" style="margin:0">Resume: <a class="link-inline" href="assets/resume.pdf" download>Download (PDF)</a></p>
+        </aside>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="muted">Made with ❤️ • Built with HTML/CSS/JS — Deploy on GitHub Pages</div>
-  </footer>
+    <!-- FOOTER -->
+    <footer class="site-footer" role="contentinfo">
+      © <strong>Khandakar Nafees Hossain</strong> — Software Engineer • C++ • DSA • Built with HTML/CSS. Hosted on GitHub Pages.
+    </footer>
+  </div>
 
+  <!-- Minimal JS for form demo + small interactions -->
   <script>
-    // Simple resume download stub (replace URL with real resume file if hosted)
-    function downloadResume(){
-      const url = 'https://example.com/your-resume.pdf'; // <-- replace this with your resume link or a GitHub raw file link
-      // If you want to host your resume inside the same repo, upload resume.pdf and use './resume.pdf'
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Nafees_Hossain_Resume.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-
-    // Contact form (local demo - replace with Formspree or your backend)
+    // Demo contact form (client-side only). Replace with Formspree / Netlify forms / backend as needed.
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
       const status = document.getElementById('formStatus');
-      status.textContent = 'Sending... (demo)';
+      status.textContent = 'Sending… (demo only)';
       setTimeout(()=> {
-        status.textContent = 'Message sent — thanks! (This is a demo; wire up Formspree or email service.)';
+        status.textContent = 'Message sent — thank you! I will reply soon.';
         this.reset();
       }, 900);
     });
 
-    // Background particles - lightweight
-    (function(){
-      const canvas = document.getElementById('bg-canvas');
-      const ctx = canvas.getContext('2d');
-      let w = canvas.width = innerWidth;
-      let h = canvas.height = innerHeight;
-      const particles = [];
-      const count = Math.round((w*h)/90000); // scale with screen
-      for(let i=0;i<count;i++){
-        particles.push({
-          x: Math.random()*w,
-          y: Math.random()*h,
-          r: Math.random()*1.8 + 0.6,
-          vx: (Math.random()-0.5)*0.2,
-          vy: (Math.random()-0.5)*0.2,
-          hue: Math.random()*360
-        });
-      }
-      function draw(){
-        ctx.clearRect(0,0,w,h);
-        for(const p of particles){
-          p.x += p.vx;
-          p.y += p.vy;
-          if(p.x < 0) p.x = w;
-          if(p.x > w) p.x = 0;
-          if(p.y < 0) p.y = h;
-          if(p.y > h) p.y = 0;
-          ctx.beginPath();
-          const grad = ctx.createRadialGradient(p.x,p.y,p.r*0.1,p.x,p.y,p.r*6);
-          grad.addColorStop(0, 'hsla(' + (200 + Math.sin(p.hue)*40) + ',100%,60%,0.18)');
-          grad.addColorStop(1, 'rgba(10,12,20,0)');
-          ctx.fillStyle = grad;
-          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-          ctx.fill();
-        }
-        requestAnimationFrame(draw);
-      }
-      draw();
-      addEventListener('resize', ()=>{
-        w = canvas.width = innerWidth;
-        h = canvas.height = innerHeight;
-      });
-    })();
-
-    // Smooth scroll for nav links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const target = document.querySelector(this.getAttribute('href'));
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-      });
+    // Small accessibility: focus outline on keyboard nav
+    document.body.addEventListener('keydown', function(e){
+      if(e.key === 'Tab') document.documentElement.style.scrollBehavior = 'smooth';
     });
-
   </script>
 </body>
 </html>
