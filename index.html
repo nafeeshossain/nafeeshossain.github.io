@@ -1,166 +1,421 @@
-import React from "react";
-import { GitHub, LinkedIn, Mail } from "lucide-react";
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nafees Hossain — Portfolio • C++ • DSA • Web Dev</title>
+  <meta name="description" content="Portfolio of Nafees Hossain — Student passionate about C++, Data Structures & Algorithms, Competitive Programming, and Web Development." />
+  <meta name="author" content="Nafees Hossain" />
 
-// Single-file React + Tailwind portfolio component
-// Replace placeholders (LINKEDIN_URL, GITHUB_URL, LEETCODE_URL, CV_PDF_URL) with your real links.
-// Drop this file into a React (Vite/Next) project with TailwindCSS configured.
+  <style>
+    /* ====== VARIABLES & RESET ====== */
+    :root{
+      --bg:#071028; --card:#071428; --muted:#95a6bf; --accent:#6ee7b7; --accent2:#60a5fa; --glass:rgba(255,255,255,0.03);
+      --glass-2:rgba(255,255,255,0.02); --success:#34d399; --danger:#fb7185; --mono: "Fira Code",ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,#071028 0%, #031226 100%);color:#e6eef6}
+    a{color:var(--accent)}
 
-export default function NafeesPortfolio() {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-900">
-      <header className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-        <a href="#hero" className="text-2xl font-semibold">Nafees Hossain</a>
-        <nav className="flex items-center gap-3">
-          <a href="#projects" className="text-sm hover:underline">Projects</a>
-          <a href="#about" className="text-sm hover:underline">About</a>
-          <a href="#contact" className="text-sm hover:underline">Contact</a>
-          <a href="/My CV.pdf" target="_blank" rel="noreferrer" className="ml-4 inline-flex items-center gap-2 px-3 py-1.5 border rounded-lg text-sm">
-            Resume
-          </a>
-        </nav>
-      </header>
+    /* ====== LAYOUT ====== */
+    .wrap{max-width:1200px;margin:28px auto;padding:22px}
+    header.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .avatar{width:92px;height:92px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021024;font-size:26px;box-shadow:0 12px 36px rgba(2,6,23,0.6)}
+    .brand h1{margin:0;font-size:20px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
 
-      <main className="max-w-5xl mx-auto px-6 pb-24">
-        {/* HERO */}
-        <section id="hero" className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-12">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">Hi, I’m <span className="text-indigo-600">Nafees</span>.</h1>
-            <p className="mt-4 text-lg max-w-xl">Student at IEMK • Passionate about <strong>C++</strong>, <strong>DSA</strong>, mobile & web development. I build reliable apps, optimise algorithms, and produce clean, maintainable code.</p>
+    .nav{display:flex;gap:8px;align-items:center}
+    .nav a{padding:8px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);font-weight:700}
+    .nav a.active{box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    .nav a.primary{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#021024;border:none}
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://www.linkedin.com/in/nafeeshossain/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-4 py-2 border rounded-lg">
-                <LinkedIn size={16} /> LinkedIn
-              </a>
-              <a href="https://github.com/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-4 py-2 border rounded-lg">
-                <GitHub size={16} /> GitHub
-              </a>
-              <a href="https://leetcode.com/u/nafeeshossain/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-4 py-2 border rounded-lg">
-                {/* small LeetCode SVG */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                LeetCode
-              </a>
+    .layout{display:grid;grid-template-columns:1fr 380px;gap:24px;margin-top:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;box-shadow:0 14px 44px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+    /* ====== HERO ====== */
+    .headline{font-size:28px;margin:0}
+    .sub{color:var(--muted);margin-top:10px;line-height:1.6}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .tag{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700;font-size:13px;color:var(--muted)}
+
+    .stats{display:flex;gap:12px;margin-top:18px}
+    .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.01));text-align:center}
+    .stat strong{display:block;font-size:20px}
+
+    /* ====== PROJECT GRID ====== */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+    .project{padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));cursor:pointer;transition:transform .18s ease,box-shadow .18s}
+    .project:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+    .project h4{margin:0 0 8px 0}
+    .project p{margin:0;color:var(--muted);font-size:13px}
+
+    /* ====== SKILLS ====== */
+    .skill{margin-bottom:12px}
+    .skill .label{display:flex;justify-content:space-between;font-weight:800}
+    .bar{height:12px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px;overflow:hidden}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
+
+    /* ====== TIMELINE ====== */
+    .timeline{border-left:2px solid rgba(255,255,255,0.03);padding-left:16px;margin-top:12px}
+    .event{position:relative;margin-bottom:18px}
+    .event:before{content:'';position:absolute;left:-12px;top:2px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+
+    /* ====== ASIDE ====== */
+    aside.right .info-row{display:flex;gap:10px;align-items:center}
+    .kbd{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-weight:700}
+    .links{display:flex;flex-direction:column;gap:8px}
+
+    /* ====== MODAL ====== */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;z-index:90}
+    .modal.open{display:flex}
+    .modal .box{width:min(980px,100%);max-height:86vh;overflow:auto;padding:20px;border-radius:12px;background:#021026;border:1px solid rgba(255,255,255,0.02);box-shadow:0 40px 110px rgba(1,6,20,0.88)}
+
+    /* ====== FOOTER ====== */
+    footer{margin-top:26px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* ====== RESPONSIVE ====== */
+    @media(max-width:980px){
+      .layout{grid-template-columns:1fr}
+      .projects-grid{grid-template-columns:1fr}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    .btn{padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-weight:800}
+    .btn.cta{background:linear-gradient(90deg,var(--accent2),var(--accent));border:none;color:#021024}
+    .fade-in{animation:fadeIn .9s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* LIGHT THEME */
+    :root.light{--bg:#f6f9fb;--card:#ffffff;--muted:#4b5563;--accent:#06b6d4;--accent2:#60a5fa;color:#0b1220}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="avatar" id="avatar">NH</div>
+        <div>
+          <h1>Nafees Hossain</h1>
+          <p class="muted">IT Student • C++ • DSA • Web Developer</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="primary-navigation">
+        <a href="#home" data-route>Home</a>
+        <a href="#projects" data-route>Projects</a>
+        <a href="#skills" data-route>Skills</a>
+        <a href="#about" data-route>About</a>
+        <a href="#contact" data-route class="primary">Contact</a>
+        <button id="themeToggle" class="btn" title="Toggle theme">Theme</button>
+      </nav>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="layout">
+      <!-- Left column -->
+      <section>
+        <div class="card hero fade-in">
+          <h2 class="headline">Student • Problem-solver • Builder</h2>
+          <p class="sub">I build reliable, maintainable code and enjoy solving algorithmic problems. Currently pursuing B.Tech in Information Technology — team lead on sustainable EV projects and active in research, hackathons and content creation.</p>
+
+          <div class="tags">
+            <div class="tag">C++</div>
+            <div class="tag">Data Structures</div>
+            <div class="tag">Algorithms</div>
+            <div class="tag">Web Dev</div>
+            <div class="tag">Embedded</div>
+          </div>
+
+          <div class="stats" aria-hidden>
+            <div class="stat">
+              <small class="muted">LeetCode solved</small>
+              <strong id="lcSolved">—</strong>
+              <small class="muted"><a id="lcLink" href="https://leetcode.com/u/nafeeshossain/" target="_blank">View profile</a></small>
             </div>
-
-            <div className="mt-8 text-sm text-gray-600">
-              <p>Capabilities: Android (Kotlin + C++ via JNI), React (Web), algorithms & competitive programming.</p>
-              <p className="mt-1">Style: Clear, professional writing. Design: polished, not over-stylized.</p>
+            <div class="stat">
+              <small class="muted">Projects (highlight)</small>
+              <strong id="projCount">6+</strong>
+              <small class="muted">EV • V2V • Web Apps</small>
+            </div>
+            <div class="stat">
+              <small class="muted">Languages</small>
+              <strong>C++, C, Python</strong>
+              <small class="muted">DSA • System Design basics</small>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <h3 className="text-lg font-semibold">Snapshot</h3>
-            <ul className="mt-4 space-y-3 text-sm text-gray-700">
-              <li><strong>Location:</strong> IEMK</li>
-              <li><strong>Languages:</strong> C++, Kotlin, Java, JavaScript, HTML/CSS</li>
-              <li><strong>Focus:</strong> DSA, System Design basics, Mobile & Web</li>
-              <li><strong>LeetCode:</strong> <em>Visit profile for live stats</em></li>
-            </ul>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <a href="/My CV.pdf" className="text-center py-2 border rounded-lg">Download CV</a>
-              <a href="#contact" className="text-center py-2 bg-indigo-600 text-white rounded-lg">Contact</a>
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn cta" href="My CV.pdf" target="_blank">Download Resume</a>
+            <a class="btn" href="https://github.com/nafeeshossain" target="_blank">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/nafeeshossain/" target="_blank">LinkedIn</a>
+            <a class="btn" href="https://leetcode.com/u/nafeeshossain/" target="_blank">LeetCode</a>
+          </div>
+
+          <div style="margin-top:18px;color:var(--muted);font-size:13px">Pro tip: rename the repo to <code>nafeeshossain.github.io</code> and push this file as <code>index.html</code> to auto-publish on GitHub Pages.</div>
+        </div>
+
+        <!-- Projects card -->
+        <div class="card fade-in" id="projectsSection" style="margin-top:18px">
+          <h3 style="margin:0 0 10px 0">Selected Projects</h3>
+          <p class="muted" style="margin:0 0 12px 0">Click any project for details, links and live demo (if available).</p>
+
+          <div class="projects-grid" id="projects">
+            <div class="project" data-proj="ev">
+              <h4>Multi-Purpose EV (Team Lead)</h4>
+              <p>Led hardware-software integration for a multi-utility EV — battery systems, firmware and dashboard.</p>
+            </div>
+            <div class="project" data-proj="v2v">
+              <h4>V2V Charging & Solar EV</h4>
+              <p>Research on vehicle-to-vehicle charging and solar-assisted operation for rural scenarios.</p>
+            </div>
+            <div class="project" data-proj="portfolio">
+              <h4>Portfolio & Web Apps</h4>
+              <p>Responsive portfolio (this site) and several small web utilities — clean UI, accessible code.</p>
+            </div>
+            <div class="project" data-proj="cp">
+              <h4>Competitive Programming</h4>
+              <p>Active problem-solving on LeetCode — arrays, DP, hashing and graph algorithms.</p>
+            </div>
+            <div class="project" data-proj="iot">
+              <h4>Embedded IoT Systems</h4>
+              <p>Sensor integration, data logging and communication stacks for prototype vehicles.</p>
+            </div>
+            <div class="project" data-proj="collab">
+              <h4>Collaborations & Mentorship</h4>
+              <p>Worked with faculty mentors and researchers; presented at symposiums including ISV.</p>
             </div>
           </div>
-        </section>
 
-        {/* PROJECTS */}
-        <section id="projects" className="pt-6">
-          <h2 className="text-2xl font-bold">Selected Projects</h2>
-          <p className="mt-2 text-sm text-gray-600">A curated list — live projects first. Replace these cards with your real projects and links.</p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <article className="bg-white p-5 rounded-xl shadow">
-              <h4 className="font-semibold">Grocery Manager (Android)</h4>
-              <p className="mt-2 text-sm text-gray-700">Kotlin + Native C++ backend (JNI). Voice input, budget tracking, item history, modern UI.</p>
-              <div className="mt-4 flex gap-2">
-                <a className="text-sm px-3 py-1 border rounded" href="#">Source</a>
-                <a className="text-sm px-3 py-1 border rounded" href="#">APK</a>
-              </div>
-            </article>
-
-            <article className="bg-white p-5 rounded-xl shadow">
-              <h4 className="font-semibold">Algo Visualizer (Web)</h4>
-              <p className="mt-2 text-sm text-gray-700">React app visualising graph algorithms and sorting algorithms. Great for teaching and interviews.</p>
-              <div className="mt-4 flex gap-2">
-                <a className="text-sm px-3 py-1 border rounded" href="#">Live</a>
-                <a className="text-sm px-3 py-1 border rounded" href="#">Source</a>
-              </div>
-            </article>
-
-            {/* add more project cards as needed */}
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn" href="#projects" data-route>See all projects</a>
+            <a class="btn" href="https://github.com/nafeeshossain" target="_blank">Source on GitHub</a>
           </div>
-        </section>
+        </div>
 
-        {/* ABOUT */}
-        <section id="about" className="mt-12">
-          <h2 className="text-2xl font-bold">About</h2>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 bg-white p-6 rounded-xl shadow text-sm text-gray-700">
-              <p>I’m a student deeply interested in algorithmic problem solving and app development. I enjoy building production-ready mobile apps and elegant web interfaces, with a focus on performance and maintainability.</p>
+        <!-- Skills & timeline -->
+        <div class="card fade-in" id="skills" style="margin-top:18px">
+          <h3 style="margin:0 0 10px 0">Skills</h3>
+          <div class="skill"><div class="label">C++ <span class="muted">Expert</span></div><div class="bar"><i data-width="95%"></i></div></div>
+          <div class="skill"><div class="label">Data Structures & Algorithms <span class="muted">Strong</span></div><div class="bar"><i data-width="90%"></i></div></div>
+          <div class="skill"><div class="label">Web dev (HTML/CSS/JS) <span class="muted">Good</span></div><div class="bar"><i data-width="80%"></i></div></div>
+          <div class="skill"><div class="label">Embedded Systems <span class="muted">Practical</span></div><div class="bar"><i data-width="72%"></i></div></div>
+          <div class="skill"><div class="label">Python / Scripting <span class="muted">Working</span></div><div class="bar"><i data-width="68%"></i></div></div>
 
-              <h4 className="mt-4 font-semibold">What I do</h4>
-              <ul className="mt-2 list-disc list-inside text-sm">
-                <li>Data Structures & Algorithms — competitive programming & interview prep</li>
-                <li>Android apps with Kotlin and native C++ modules</li>
-                <li>React web apps and small full-stack features</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow text-sm">
-              <h4 className="font-semibold">Skills</h4>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                <span className="px-2 py-1 border rounded">C++</span>
-                <span className="px-2 py-1 border rounded">Kotlin</span>
-                <span className="px-2 py-1 border rounded">React</span>
-                <span className="px-2 py-1 border rounded">Algorithms</span>
-                <span className="px-2 py-1 border rounded">Git</span>
-                <span className="px-2 py-1 border rounded">UI Design</span>
-              </div>
-            </div>
+          <h4 style="margin-top:14px">Experience Timeline</h4>
+          <div class="timeline">
+            <div class="event">2023 — Team lead: Multi-purpose EV prototype; ISV Symposium (DA-IICT) — cash prize and shortlisted for IEEE Smart Village funding.</div>
+            <div class="event">2024 — Collaboration with IIFR lab researcher for mechanical support & battery integration.</div>
+            <div class="event">2025 — Ongoing: Web projects, LeetCode practice and open-source contributions.</div>
           </div>
-        </section>
+        </div>
 
-        {/* CONTACT */}
-        <section id="contact" className="mt-12 pb-12">
-          <h2 className="text-2xl font-bold">Contact</h2>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <form className="md:col-span-2 bg-white p-6 rounded-xl shadow space-y-4">
-              <div>
-                <label className="block text-sm">Your name</label>
-                <input className="mt-1 w-full border rounded px-3 py-2" placeholder="Name" />
-              </div>
-              <div>
-                <label className="block text-sm">Email</label>
-                <input className="mt-1 w-full border rounded px-3 py-2" placeholder="you@example.com" />
-              </div>
-              <div>
-                <label className="block text-sm">Message</label>
-                <textarea className="mt-1 w-full border rounded px-3 py-2" rows={4} placeholder="What would you like to collaborate on?" />
-              </div>
-              <div>
-                <button type="button" className="px-4 py-2 rounded bg-indigo-600 text-white">Send</button>
-              </div>
-            </form>
+        <!-- About -->
+        <div class="card fade-in" id="about" style="margin-top:18px">
+          <h3 style="margin:0 0 10px 0">About Me</h3>
+          <p class="muted">I’m a B.Tech student focusing on systems-level programming, algorithms and building practical web interfaces. I enjoy clean code, efficient solutions, and collaborating across hardware and software disciplines.</p>
 
-            <div className="bg-white p-6 rounded-xl shadow text-sm">
-              <h4 className="font-semibold">Find me</h4>
-              <ul className="mt-4 space-y-3">
-                <li className="flex items-center gap-2"><GitHub size={16} /> <a href="https://github.com/" target="_blank" rel="noreferrer">github.com/your-username</a></li>
-                <li className="flex items-center gap-2"><LinkedIn size={16} /> <a href="https://www.linkedin.com/in/nafeeshossain/" target="_blank" rel="noreferrer">linkedin.com/in/nafeeshossain</a></li>
-                <li className="flex items-center gap-2"><Mail size={16} /> <a href="mailto:you@example.com">you@example.com</a></li>
-              </ul>
+          <h4 style="margin-top:12px">Education</h4>
+          <p class="muted">B.Tech (Information Technology) — IEM Kolkata — Expected graduation 2026</p>
 
-              <div className="mt-6">
-                <h5 className="font-semibold">Want a polished version?</h5>
-                <p className="text-xs text-gray-600 mt-2">I can convert this into a full Next.js + Tailwind deployment with animations, SEO, and hosted live demo.</p>
-              </div>
+          <h4 style="margin-top:12px">Awards & Activities</h4>
+          <ul class="muted">
+            <li>Presented at ISV Symposium (DA-IICT) — 2024</li>
+            <li>Winner — regional EV competitions</li>
+            <li>Active in hackathons, open-source and mentorship</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Right column / aside -->
+      <aside class="right">
+        <div class="card fade-in">
+          <h4 style="margin:0 0 10px 0">Contact & Quick Links</h4>
+          <div class="info-row" style="margin-bottom:10px"><div><strong>Email</strong><div class="kbd" id="email">hossainnafees587@gmail.com</div></div></div>
+          <div class="info-row small"><div><strong>Location</strong><div class="muted">Howrah, West Bengal, India</div></div></div>
+
+          <div class="links" style="margin-top:10px">
+            <div><strong>LinkedIn</strong><div class="small"><a href="https://www.linkedin.com/in/nafeeshossain/" target="_blank">linkedin.com/in/nafeeshossain</a></div></div>
+            <div><strong>GitHub</strong><div class="small"><a href="https://github.com/nafeeshossain" target="_blank">github.com/nafeeshossain</a></div></div>
+            <div><strong>LeetCode</strong><div class="small"><a href="https://leetcode.com/u/nafeeshossain/" target="_blank">leetcode.com/u/nafeeshossain</a></div></div>
+            <div><strong>Blog / Channel</strong><div class="small"><a href="#">nafeestech.blog (placeholder)</a></div></div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn" id="copyEmail">Copy Email</button>
+            <a class="btn" href="mailto:hossainnafees587@gmail.com">Email</a>
+            <a class="btn" href="My CV.pdf" target="_blank">Open Resume</a>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)" />
+          <div class="small">Available for internships, research collaborations and freelance web projects.</div>
+        </div>
+
+        <div class="card fade-in" style="margin-top:14px">
+          <h4 style="margin:0 0 10px 0">Live Stats</h4>
+          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+            <div style="flex:1">
+              <div class="small">LeetCode</div>
+              <div style="font-weight:900;font-size:20px" id="lcSmall">—</div>
+            </div>
+            <div style="flex:1">
+              <div class="small">GitHub repos</div>
+              <div style="font-weight:900;font-size:20px" id="ghRepos">—</div>
             </div>
           </div>
-        </section>
-      </main>
 
-      <footer className="border-t py-6 text-center text-sm text-gray-600">
-        © {new Date().getFullYear()} Nafees Hossain — built with care.
-      </footer>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <a class="btn" href="https://leetcode.com/u/nafeeshossain/" target="_blank">LeetCode</a>
+            <a class="btn" href="https://github.com/nafeeshossain" target="_blank">GitHub</a>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="margin-top:14px">
+          <h4 style="margin:0 0 10px 0">Resume</h4>
+          <p class="muted" style="margin:0 0 10px 0">Preview & download the full CV.</p>
+          <iframe src="My CV.pdf" style="width:100%;height:300px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)" title="Resume"></iframe>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer>
+      Built with ❤️ by Nafees — Student-friendly, professional and mobile-first. Fork on <a href="https://github.com/nafeeshossain" target="_blank">GitHub</a>.
+    </footer>
+
+    <!-- Project modal -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true">
+      <div class="box" id="modalBox">
+        <button id="modalClose" class="btn" style="float:right">Close</button>
+        <div id="modalContent"></div>
+      </div>
     </div>
-  );
-}
+
+  </div>
+
+  <script>
+    // ====== small helpers ======
+    function q(s, el=document){return el.querySelector(s)}
+    function qAll(s, el=document){return Array.from((el||document).querySelectorAll(s))}
+
+    // router-like behaviour for in-page nav
+    function routeTo(hash){
+      if(!hash) hash = '#home';
+      qAll('[data-route]').forEach(a=>a.classList.remove('active'));
+      var link = document.querySelector('[href="'+hash+'"]'); if(link) link.classList.add('active');
+      if(hash==='#projects') document.getElementById('projectsSection').scrollIntoView({behavior:'smooth'});
+      else if(hash==='#skills') document.getElementById('skills').scrollIntoView({behavior:'smooth'});
+      else if(hash==='#about') document.getElementById('about').scrollIntoView({behavior:'smooth'});
+      else if(hash==='#contact') window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+      else window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    // theme toggle
+    (function(){
+      var root = document.documentElement;
+      var t = localStorage.getItem('theme');
+      if(t==='light') root.classList.add('light');
+      q('#themeToggle').addEventListener('click', function(){
+        root.classList.toggle('light');
+        localStorage.setItem('theme', root.classList.contains('light') ? 'light':'dark');
+      });
+    })();
+
+    // animate skill bars
+    function animateSkillBars(){
+      qAll('.bar > i').forEach(el=>{
+        var w = el.getAttribute('data-width') || '60%';
+        setTimeout(()=>{ el.style.width = w; }, 150);
+      });
+    }
+
+    // copy email
+    q('#copyEmail').addEventListener('click', function(){
+      navigator.clipboard.writeText(q('#email').textContent).then(()=>{ alert('Email copied to clipboard'); }).catch(()=>{ prompt('Copy this email', q('#email').textContent) });
+    });
+
+    // modal
+    var modal = q('#modal'), modalContent = q('#modalContent');
+    q('#modalClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+    function openModal(html){ modalContent.innerHTML = html; modal.classList.add('open'); window.scrollTo(0,0); }
+    function closeModal(){ modal.classList.remove('open'); modalContent.innerHTML = ''; }
+
+    // projects data
+    var projectsData = {
+      'ev':{
+        title: 'Multi-Purpose EV (Team Lead)',
+        body: '<p><strong>Role:</strong> Team Lead — system & software integration</p>'+
+              '<p><strong>Summary:</strong> Designed prototype for a multi-utility EV for rural use. Worked on BMS, motor control and a small web dashboard.</p>'+
+              '<h4>Highlights</h4><ul><li>Presented at ISV Symposium (DA-IICT)</li><li>Interdisciplinary team work</li><li>Prototype testing & demo</li></ul>'+
+              '<p><a href="https://github.com/nafeeshossain" target="_blank">Related repositories on GitHub</a></p>'
+      },
+      'v2v':{
+        title: 'V2V Charging & Solar EV',
+        body: '<p><strong>Summary:</strong> Prototype study of vehicle-to-vehicle charging with solar assistance for extended runtime.</p>'+
+              '<p class="muted">Tech: Power electronics, MPPT, microcontrollers, battery systems.</p>'
+      },
+      'portfolio':{
+        title: 'Portfolio & Web Apps',
+        body: '<p>This single-file portfolio and a set of small web utilities demonstrating front-end design and back-end endpoints.</p>'+
+              '<p><a href="https://github.com/nafeeshossain" target="_blank">View code on GitHub</a></p>'
+      },
+      'cp':{
+        title: 'Competitive Programming',
+        body: '<p>Regular practice on LeetCode focusing on arrays, DP, hashing and graphs. Preparing editorials and notes.</p>'+
+              '<p><a href="https://leetcode.com/u/nafeeshossain/" target="_blank">LeetCode Profile</a></p>'
+      },
+      'iot':{
+        title: 'Embedded & IoT',
+        body: '<p>Sensor integration, logging and telemetry for prototype systems. Built small dashboards for monitoring.</p>'
+      },
+      'collab':{
+        title: 'Collaborations & Mentorship',
+        body: '<p>Working with faculty mentors and researchers; engaged in symposium presentations and funding discussions.</p>'
+      }
+    };
+
+    qAll('.project').forEach(p=>p.addEventListener('click', function(){ var id=this.dataset.proj; var d=projectsData[id]; if(!d) return; openModal('<h2>'+d.title+'</h2>'+d.body); }));
+
+    // LeetCode best-effort fetch (may be blocked by CORS on GitHub Pages)
+    (function(){
+      var profile = 'https://leetcode.com/u/nafeeshossain/';
+      var fallback='42';
+      fetch(profile).then(r=>r.text()).then(t=>{
+        var m = t.match(/(\\d+)\s+problems solved/i);
+        if(m && m[1]) setLC(m[1]); else setLC(fallback);
+      }).catch(()=>setLC(fallback));
+      function setLC(n){ q('#lcSolved').textContent=n; q('#lcSmall').textContent=n }
+    })();
+
+    // GitHub repo count (best-effort using public API)
+    (function(){
+      fetch('https://api.github.com/users/nafeeshossain').then(r=>r.json()).then(j=>{ if(j && j.public_repos!==undefined) q('#ghRepos').textContent=j.public_repos; }).catch(()=>{});
+    })();
+
+    // animate bars
+    animateSkillBars();
+
+    // router
+    window.addEventListener('hashchange', ()=>routeTo(location.hash));
+    routeTo(location.hash || '#home');
+
+    // avatar load from profile.jpg in repo root
+    (function(){ var avatarEl=q('#avatar'); var img=new Image(); img.onload=function(){ avatarEl.style.background='transparent'; avatarEl.innerHTML=''; avatarEl.appendChild(img); img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover'; img.style.borderRadius='12px'; }; img.onerror=function(){}; img.src='profile.jpg'; })();
+
+    // copy email
+    q('#copyEmail').addEventListener('click', function(){ navigator.clipboard.writeText(q('#email').textContent).then(()=>alert('Email copied')).catch(()=>prompt('Copy email', q('#email').textContent)); });
+
+    // small UX touches
+    window.addEventListener('load', function(){ qAll('.fade-in').forEach((el,i)=>el.style.animationDelay=(i*80)+'ms'); q('#projCount').textContent = qAll('.project').length + '+' });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') { var m=q('#modal'); if(m) m.classList.remove('open') } });
+
+  </script>
+
+
+</body>
+</html>
