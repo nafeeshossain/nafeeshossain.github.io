@@ -1,331 +1,183 @@
+<!--
+  Portfolio: Nafees Hossain
+  Single-file responsive GitHub Pages site (index.html)
+  Instructions: Create a repository named `nafeeshossain.github.io`, add this index.html at the root,
+  add your resume (My CV.pdf) and profile picture `profile.jpg` to the repo, then push to GitHub.
+-->
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Khandakar Nafees Hossain — Software Engineer (C / C++ / DSA)</title>
-<meta name="description" content="Portfolio of Khandakar Nafees Hossain — Software Engineering, C++, Data Structures & Algorithms.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --maxw:1100px;
-    --accent1:#00e1ff;
-    --accent2:#ff6bcb;
-    --muted:#6b7280;
-    --card-radius:14px;
-    --deep-shadow: rgba(3,6,23,0.72);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    background: linear-gradient(120deg,#fceabb 0%,#f8b500 30%, #ffd6f2 60%, #cfe9ff 100%);
-    color:#081126;
-    padding:36px 20px;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nafees Hossain — Student • C++ • DSA • Web Dev</title>
+  <meta name="description" content="Nafees Hossain — IT Student passionate about C++, Data Structures & Algorithms and Web Development. Projects, live stats, resume and contact." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#98a0b3;--accent:#6ee7b7;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,#071025 0%, #071728 60%); color:#e6eef6}
+    .container{max-width:1100px;margin:36px auto;padding:24px}
 
-  /* Decorative painting SVG + soft gradient overlay */
-  .art { position:fixed; inset:0; z-index:0; pointer-events:none; mix-blend-mode:screen; opacity:0.95; }
-  .paint-overlay { position:fixed; inset:0; z-index:0; pointer-events:none; mix-blend-mode:overlay; background:
-    radial-gradient(600px 300px at 10% 20%, rgba(255,255,255,0.16), transparent 10%),
-    radial-gradient(700px 380px at 90% 80%, rgba(0,0,0,0.04), transparent 18%);
-    animation: drift 20s linear infinite; opacity:0.95;
-  }
-  @keyframes drift { 0%{transform:translateY(-3px)}50%{transform:translateY(6px)}100%{transform:translateY(-3px)} }
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:76px;height:76px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#072;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    .brand h1{font-size:20px;margin:0}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
 
-  /* main container */
-  .page { position:relative; z-index:2; width:100%; max-width:var(--maxw); margin:0 auto; }
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{padding:10px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,#06b6d4,#6ee7b7);color:#04102a;border:none}
 
-  /* header */
-  header { display:flex; justify-content:space-between; align-items:center; gap:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
-    padding:14px 18px; border-radius:14px; border:1px solid rgba(0,0,0,0.04); box-shadow:0 16px 40px rgba(6,10,30,0.08);
-  }
-  .brand { display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; }
-  .logo { width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,var(--accent1),var(--accent2)); display:grid; place-items:center; font-weight:800; color:#061226; }
-  .brand h1{ margin:0; font-size:16px; }
-  .brand p{ margin:0; font-size:12px; color:var(--muted); }
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:28px;align-items:stretch}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
 
-  .actions { display:flex; gap:10px; align-items:center; }
-  .btn { padding:8px 12px; border-radius:10px; font-weight:700; text-decoration:none; display:inline-flex; gap:8px; align-items:center; cursor:pointer; }
-  .btn-primary { background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#071022; box-shadow:0 8px 28px rgba(0,0,0,0.08); border:0; }
-  .btn-ghost { background:transparent; border:1px solid rgba(0,0,0,0.06); color:var(--accent1); }
+    .intro h2{margin:0;font-size:28px}
+    .intro p{color:var(--muted);line-height:1.6}
+    .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .pill{background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
 
-  /* hero layout */
+    .stats{display:flex;gap:12px;margin-top:18px}
+    .stat{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.01));padding:12px;border-radius:10px;text-align:center}
+    .stat strong{display:block;font-size:20px}
+    .links{display:flex;flex-direction:column;gap:8px}
 
-  .hero { margin-top:18px; display:grid; grid-template-columns: 1fr 340px; gap:22px; align-items:start; }
-  @media (max-width:980px){ .hero { grid-template-columns: 1fr; } }
+    .projects{margin-top:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .proj{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .proj h4{margin:0 0 6px 0}
+    .proj p{margin:0;color:var(--muted);font-size:13px}
 
-  /* base card */
-  .card { position:relative; background:white; border-radius:var(--card-radius); padding:18px; border:1px solid rgba(0,0,0,0.04); overflow:visible; }
-  .card h2, .card h3 { margin:0 0 8px 0; }
-  .muted { color:var(--muted); font-size:13px; }
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
 
-  /* ---------- EXACT CARD STYLES ---------- */
+    /* responsive */
+    @media(max-width:900px){.hero{grid-template-columns:1fr} .projects{grid-template-columns:1fr} .brand h1{font-size:18px}}
 
-  /* 1) MEDIUM card: left-side shadow + slight bottom shadow */
-  .card-medium {
-    box-shadow:
-      -18px 0 28px -18px rgba(0,225,255,0.12),
-      0 10px 22px -12px rgba(3,6,18,0.65);
-    border-radius:14px;
-  }
-  .card-medium::before {
-    content:""; position:absolute; left:0; top:12%; bottom:12%; width:8px; border-top-right-radius:8px; border-bottom-right-radius:8px;
-    background: linear-gradient(180deg,var(--accent1),var(--accent2)); box-shadow:0 8px 30px rgba(0,225,255,0.06);
-  }
+    /* subtle animations */
+    .float{transform:translateY(0);animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
 
-  /* 2) SMALL card: only bottom shadow */
-  .card-small {
-    box-shadow: 0 12px 28px -14px rgba(2,6,23,0.62);
-    border-radius:12px; padding:12px 14px; max-width:420px;
-  }
-
-  /* 3) LARGE card: left-side shadow + striped bottom ledge (3D) */
-  .card-large {
-    margin-top:10px;
-    margin-bottom:56px; /* room for ledge */
-    padding:22px; border-radius:16px;
-    box-shadow:
-      -32px 0 60px -36px rgba(6,18,40,0.62),
-      0 30px 60px -30px rgba(2,6,23,0.72);
-  }
-  .card-large::after {
-    content:""; position:absolute; left:14px; right:14px; bottom:-24px; height:32px; border-bottom-left-radius:14px; border-bottom-right-radius:14px;
-    background:
-      repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0px, rgba(255,255,255,0.02) 6px, rgba(0,0,0,0.06) 12px),
-      linear-gradient(90deg, rgba(255,107,203,0.12), rgba(0,225,255,0.08));
-    box-shadow: 0 26px 46px -24px var(--deep-shadow);
-    z-index:-1; transform:translateZ(0);
-  }
-
-  /* project layout */
-  .project { display:flex; gap:14px; align-items:flex-start; }
-  .thumb { width:160px; height:100px; border-radius:10px; overflow:hidden; flex-shrink:0; border:1px solid rgba(0,0,0,0.04); box-shadow:0 12px 30px rgba(6,10,30,0.06); }
-  .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-
-  .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-top:12px; }
-  @media (max-width:1100px){ .grid-3 { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width:700px){ .grid-3 { grid-template-columns: 1fr; } }
-
-  .badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-  .badge { padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92)); box-shadow:0 8px 20px rgba(6,10,30,0.06); border:1px solid rgba(0,0,0,0.04); }
-
-  footer { margin-top:22px; text-align:center; color:var(--muted); font-size:13px; }
-
-  a.inline { color:var(--accent1); text-decoration:none; font-weight:700; }
-  small.note { display:block; margin-top:8px; color:var(--muted); font-size:13px; }
-
-  /* small interactions */
-  .btn:hover { transform: translateY(-3px); transition:transform .14s ease; }
-  .card:hover { transform: translateY(-6px); transition:transform .18s ease; }
-
-</style>
+    /* small utilities */
+    a.link{color:var(--accent);text-decoration:none}
+    .kbd{background:rgba(255,255,255,0.04);padding:6px 8px;border-radius:6px;font-weight:700}
+  </style>
 </head>
 <body>
-
-  <!-- decorative SVG painting strokes -->
-  <div class="art" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="none" style="width:100%; height:100vh; display:block;">
-      <defs>
-        <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ffe4b5"/><stop offset="1" stop-color="#cfe9ff"/></linearGradient>
-        <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#ff9aa2" stop-opacity="0.92"/><stop offset="1" stop-color="#b8fff9" stop-opacity="0.72"/></linearGradient>
-      </defs>
-      <g transform="translate(0,-80)">
-        <path d="M0 300 C120 200 260 160 420 190 C680 240 780 120 1000 180 C1150 220 1200 120 1200 120 L1200 600 L0 600 Z" fill="url(#g1)" opacity="0.95"></path>
-        <path d="M0 120 C180 60 360 60 540 120 C720 180 900 80 1200 120 L1200 600 L0 600 Z" fill="url(#g2)" opacity="0.66"></path>
-      </g>
-    </svg>
-  </div>
-
-  <div class="paint-overlay" aria-hidden="true"></div>
-
-  <!-- page -->
-  <main class="page" role="main" aria-labelledby="nameHeading">
-
-    <!-- header -->
-    <header role="banner">
-      <a class="brand" href="#">
-        <div class="logo">NH</div>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar" id="avatar">NH</div>
         <div>
-          <h1>Khandakar Nafees Hossain</h1>
-          <p>Software Engineer • C / C++ • Data Structures & Algorithms</p>
+          <h1>Nafees Hossain</h1>
+          <p>IT Student • C++ • DSA • Web Developer • Content Creator</p>
         </div>
-      </a>
+      </div>
       <div class="actions">
-        <a class="btn btn-ghost" href="#projects">Projects</a>
-        <a class="btn btn-primary" href="assets/resume.pdf" download>Download Resume</a>
+        <a class="btn" id="downloadResume" href="My CV.pdf" target="_blank">Resume</a>
+        <a class="btn btn-primary" href="https://github.com/nafeeshossain" target="_blank">GitHub</a>
       </div>
     </header>
 
-    <!-- HERO: medium card left, small card right -->
-    <section class="hero" aria-label="Introduction">
-      <!-- medium card (about) -->
-      <article class="card card-medium" aria-labelledby="nameHeading">
-        <h2 id="nameHeading">Hi — I build efficient systems & elegant algorithms.</h2>
-        <p class="muted">I am a software-focused developer specialized in C, C++ and Data Structures & Algorithms. I build fast, memory-conscious solutions and well-tested implementations used for learning, benchmarking, and production prototypes.</p>
+    <main class="hero">
+      <section class="card intro">
+        <h2>Student • Passionate about <span style="color:var(--accent)">C++, DSA</span> & building web apps</h2>
+        <p>I build reliable, maintainable code and enjoy solving algorithmic problems. Currently pursuing B.Tech in Information Technology at IEM Kolkata — team lead on sustainable EV projects and active in research, hackathons and content creation.</p>
 
-        <div class="badges" aria-hidden="false">
-          <span class="badge">C / C++</span>
-          <span class="badge">Data Structures & Algorithms</span>
-          <span class="badge">Competitive Programming</span>
-          <span class="badge">Performance & Profiling</span>
+        <div class="pills">
+          <div class="pill">C++</div>
+          <div class="pill">Data Structures & Algorithms</div>
+          <div class="pill">Web Development</div>
+          <div class="pill">Competitive Programming</div>
         </div>
 
-        <div style="margin-top:14px; display:flex; gap:10px;">
-          <a class="btn btn-primary" href="#projects">See Projects</a>
-          <a class="btn btn-ghost" href="#contact">Contact</a>
+        <div class="stats">
+          <div class="stat">
+            <small>LeetCode solved</small>
+            <strong id="lcSolved">—</strong>
+            <small><a id="lcLink" class="link" href="https://leetcode.com/u/nafeeshossain/" target="_blank">View profile</a></small>
+          </div>
+          <div class="stat">
+            <small>Projects (highlight)</small>
+            <strong>4+</strong>
+            <small>EV, V2V, Web apps</small>
+          </div>
+          <div class="stat">
+            <small>Languages</small>
+            <strong>C++, C, Python</strong>
+            <small>DSA • System Design basics</small>
+          </div>
         </div>
 
-        <small class="note">Education: Institute of Engineering and Management, Kolkata — B.Tech (IT) 2023–2027. SGPA: 3rd semester.</small>
-      </article>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="#projects">See projects</a>
+          <a class="btn" href="https://www.linkedin.com/in/nafeeshossain/" target="_blank">LinkedIn</a>
+          <a class="btn" href="https://leetcode.com/u/nafeeshossain/" target="_blank">LeetCode</a>
+        </div>
 
-      <!-- small card (profile summary) -->
-      <aside class="card card-small" aria-label="Profile summary" style="display:flex; gap:12px; align-items:center;">
-        <div style="width:86px; height:86px; border-radius:10px; overflow:hidden; flex-shrink:0;">
-          <img src="assets/profile.jpg" alt="Profile photo (replace assets/profile.jpg)" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/220x220?text=Profile'">
+      </section>
+
+      <aside class="card float" style="height:100%">
+        <h3 style="margin:0 0 10px 0">Contact & Quick Links</h3>
+        <div class="links">
+          <div><strong>Email</strong><div class="kbd">hossainnafees587@gmail.com</div></div>
+          <div><strong>Location</strong><div class="kbd">Howrah, West Bengal, India</div></div>
+          <div><strong>LinkedIn</strong><a class="link" href="https://www.linkedin.com/in/nafeeshossain/"> linkedin.com/in/nafeeshossain</a></div>
+          <div><strong>GitHub</strong><a class="link" href="https://github.com/nafeeshossain"> github.com/nafeeshossain</a></div>
+          <div><strong>Blog / YouTube</strong><a class="link" href="https://www.nafeestech.blog"> nafeestech.blog</a></div>
         </div>
-        <div>
-          <h3 style="margin:0 0 6px 0;">Khandakar Nafees Hossain</h3>
-          <p class="muted" style="margin:0 0 6px 0;">Junior Researcher (IIFR), IEM Kolkata — Feb 2024 – Present</p>
-          <p class="muted" style="margin:0">Email: <a class="inline" href="mailto:hossainnafees587@gmail.com">hossainnafees587@gmail.com</a></p>
-        </div>
+
+        <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)" />
+        <p style="color:var(--muted);font-size:13px">Download resume, view live coding profiles and reach out for internships or collaboration.</p>
       </aside>
-    </section>
+    </main>
 
-    <!-- Projects: large card + mediums + smalls -->
-    <section id="projects" style="margin-top:18px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0;">Selected Projects</h3>
-        <p class="muted" style="margin:0; font-size:13px;">Technical focus: C / C++ • Algorithms • Systems</p>
+    <section id="projects" class="projects">
+      <div class="proj card">
+        <h4>Multi-Purpose EV (Team Lead)</h4>
+        <p>Led design & prototype of a multi-utility electric vehicle for rural use — secured IEEE Smart Village funding and national recognition.</p>
       </div>
-
-      <div class="grid-3">
-        <!-- LARGE (featured) -->
-        <article class="card card-large" aria-labelledby="proj1">
-          <div class="project">
-            <div class="thumb"><img src="assets/prj_sort.jpg" alt="Sorting Analyzer (replace assets/prj_sort.jpg)"></div>
-            <div class="meta">
-              <h4 id="proj1">Sorting Algorithm Analyzer (C++)</h4>
-              <p class="muted">Benchmarking suite comparing multiple sorting algorithms on varied distributions with cache-focused optimizations and microbenchmarks.</p>
-              <small class="muted">C++17 • STL • chrono benchmarking • CSV output</small>
-              <div style="margin-top:10px;">
-                <a class="btn btn-ghost" href="https://github.com/nafeeshossain" target="_blank" rel="noopener">View Code</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- MEDIUM -->
-        <article class="card card-medium" aria-labelledby="proj2">
-          <h3 id="proj2">Graph Traversal Toolkit</h3>
-          <p class="muted">DFS, BFS, Dijkstra, Bellman-Ford, and A* implementations with test harnesses and complexity analysis.</p>
-          <small class="muted">C++ • Adjacency lists & matrices • Priority queues</small>
-        </article>
-
-        <!-- MEDIUM -->
-        <article class="card card-medium" aria-labelledby="proj3">
-          <h3 id="proj3">Binary Tree Playground</h3>
-          <p class="muted">Utilities for tree construction, traversal, LCA, diameter, balancing checks, and serialization in C++.</p>
-          <small class="muted">C++ • recursion & iterative techniques • unit tests</small>
-        </article>
-
-        <!-- SMALL -->
-        <article class="card card-small" aria-labelledby="proj4">
-          <h3 id="proj4">Algo Visual Demos</h3>
-          <p class="muted">Interactive visualizations for sorting & path-finding (JS frontends with downloadable C++ solutions) used for teaching and interview prep.</p>
-        </article>
-
-        <!-- MEDIUM -->
-        <article class="card card-medium" aria-labelledby="proj5">
-          <h3 id="proj5">Performance Microbenchmarks</h3>
-          <p class="muted">Benchmarks for hash maps, vectors and custom allocators to guide data-structure selection in tight loops.</p>
-        </article>
-
-        <!-- SMALL -->
-        <article class="card card-small" aria-labelledby="proj6">
-          <h3 id="proj6">Code Challenges & Solutions</h3>
-          <p class="muted">Curated, well-documented C++ solutions to hard DSA problems with complexity analysis and pitfalls noted.</p>
-        </article>
+      <div class="proj card">
+        <h4>V2V Charging & Solar EV</h4>
+        <p>Research & prototype for vehicle-to-vehicle charging with solar-assisted power — collaborated with IIFR lab researchers.</p>
+      </div>
+      <div class="proj card">
+        <h4>Web Projects & Portfolio</h4>
+        <p>Responsive portfolio (this site). Web apps and small projects showcasing full-stack abilities and clean UI.</p>
+      </div>
+      <div class="proj card">
+        <h4>Competitive Programming</h4>
+        <p>Active on LeetCode — focused on arrays, DP and hashing. Building problem-solving skills and editorial writeups.</p>
       </div>
     </section>
 
-    <!-- Skills (small card) -->
-    <section id="skills" style="margin-top:22px;">
-      <h3 style="margin:0 0 8px 0;">Skills</h3>
-      <article class="card card-small">
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <span class="badge">C</span>
-          <span class="badge">C++ (Modern)</span>
-          <span class="badge">Data Structures & Algorithms</span>
-          <span class="badge">Python</span>
-          <span class="badge">Git / GitHub</span>
-          <span class="badge">Linux / Bash</span>
-          <span class="badge">Profiling & Optimization</span>
-          <span class="badge">Unit Testing</span>
-        </div>
-        <small class="muted" style="display:block; margin-top:8px;">Emphasis on algorithmic correctness, performance, and maintainable implementations.</small>
-      </article>
-    </section>
-
-    <!-- Other (small emphasis) -->
-    <section id="other" style="margin-top:22px;">
-      <h3 style="margin:0 0 8px 0;">Other (Selected)</h3>
-      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:14px;">
-        <article class="card card-small">
-          <h3>IEEE Smart Village — Team Lead</h3>
-          <p class="muted">Led EV project to national recognition and funding (listed for completeness; main focus is software).</p>
-        </article>
-        <article class="card card-medium">
-          <h3>Junior Researcher (IIFR)</h3>
-          <p class="muted">Collaborated on EV prototype integration & testing — IEM Kolkata (Feb 2024 – Present).</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" style="margin-top:22px;">
-      <h3 style="margin:0 0 8px 0;">Contact</h3>
-      <div class="card" style="display:grid; grid-template-columns:1fr 300px; gap:16px;">
-        <form id="contactForm" style="display:flex; flex-direction:column; gap:10px;">
-          <input name="name" placeholder="Your name" required style="padding:12px; border-radius:10px; border:1px solid rgba(0,0,0,0.04);">
-          <input name="email" type="email" placeholder="Email" required style="padding:12px; border-radius:10px; border:1px solid rgba(0,0,0,0.04);">
-          <textarea name="message" rows="5" placeholder="Message" required style="padding:12px; border-radius:10px; border:1px solid rgba(0,0,0,0.04);"></textarea>
-          <div style="display:flex; gap:8px;">
-            <button class="btn btn-primary" type="submit" style="border:none;">Send</button>
-            <button class="btn btn-ghost" type="reset">Reset</button>
-          </div>
-          <div id="formStatus" class="muted"></div>
-        </form>
-
-        <aside style="padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92)); border:1px solid rgba(0,0,0,0.04);">
-          <h4 style="margin:0 0 6px 0;">Quick info</h4>
-          <p class="muted" style="margin:0 0 8px 0;">Phone: +91 9564289091</p>
-          <p class="muted" style="margin:0 0 8px 0;">Email: <a class="inline" href="mailto:hossainnafees587@gmail.com">hossainnafees587@gmail.com</a></p>
-          <p class="muted" style="margin:0 0 8px 0;">LinkedIn: <a class="inline" href="https://www.linkedin.com/in/nafeeshossain/" target="_blank" rel="noopener">nafeeshossain</a></p>
-          <p class="muted" style="margin:0">GitHub: <a class="inline" href="https://github.com/nafeeshossain" target="_blank" rel="noopener">nafeeshossain</a></p>
-        </aside>
-      </div>
-    </section>
-
-    <footer aria-label="Footer" style="margin-top:20px; text-align:center; color:var(--muted);">
-      © Khandakar Nafees Hossain — Software Engineer • C / C++ • DSA
+    <footer>
+      Built with ❤️ • Student-friendly, professional and mobile-first design. <br />
+      Pro tip: rename this repo to <code>nafeeshossain.github.io</code> and push to publish on GitHub Pages.
     </footer>
-  </main>
+  </div>
 
-<script>
-  // demo contact form
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const status = document.getElementById('formStatus');
-    status.textContent = 'Sending... (demo)';
-    setTimeout(()=> { status.textContent = 'Message sent — thanks!'; this.reset(); }, 900);
-  });
-</script>
+  <script>
+    // small dynamic behaviour
+    document.getElementById('avatar').textContent = 'NH';
+
+    // Attempt to fetch live LeetCode solved count via simple scraping fallback (CORS will block on GitHub Pages).
+    // Recommended workflow: replace the number below with the live count or use a server-side fetch to keep it dynamic.
+    (function(){
+      // fallback value; you can update this manually after deploying
+      var fallback = '42';
+      document.getElementById('lcSolved').textContent = 'Loading...';
+
+      // try JSONP-like fetch via leetcode public profile page metadata if available
+      fetch('https://leetcode.com/u/nafeeshossain/')
+        .then(function(r){ return r.text(); })
+        .then(function(t){
+          // simple regex to find "problems solved" lines
+          var m = t.match(/(\\d+)\s+problems solved/);
+          if(m && m[1]){
+            document.getElementById('lcSolved').textContent = m[1];
+          } else {
+            document.getElementById('lcSolved').textContent = fallback;
+          }
+        })
+        .catch(function(){ document.getElementById('lcSolved').textContent = fallback; });
+    })();
+  </script>
 </body>
 </html>
